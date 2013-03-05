@@ -12,6 +12,7 @@ public abstract class Command {
         new HiscoreCommand();
         new CombatCommand();
         new XPForLevelCommand();
+        new MapCommand();
     }
 
     String command;
