@@ -8,6 +8,7 @@ import com.martiansoftware.jsap.JSAPResult;
 public class Main {
 
     public static void main(String[] args) {
+
         try {
             JSAP jsap = new JSAP();
 

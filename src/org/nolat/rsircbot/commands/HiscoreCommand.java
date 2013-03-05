@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.nolat.rsircbot.RSIRCBot;
 import org.nolat.rsircbot.data.HiscoreData;
 import org.nolat.rsircbot.data.RankLevelXp;
+import org.nolat.rsircbot.tools.Calculate;
+import org.nolat.rsircbot.tools.RSFormatter;
 
 public class HiscoreCommand extends Command {
 
@@ -38,7 +40,9 @@ public class HiscoreCommand extends Command {
                     bot.sendMessage(channel,
                             username + " has level " + rlx.getLevelString() + " " + skill + " (XP: "
                                     + rlx.getXpString() + "; Rank: "
-                                    + rlx.getRankString() + ")");
+                                    + rlx.getRankString() + ") +"
+                                    + RSFormatter.format(Calculate.xpUntilLevelUp(rlx.getXp()))
+                                    + " xp until level up.");
                 }
             } catch (IOException e) {
                 bot.sendMessage(channel, "Unable to retrieve hiscore information for " + username);

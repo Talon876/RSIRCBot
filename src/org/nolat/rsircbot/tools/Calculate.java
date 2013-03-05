@@ -3,11 +3,21 @@ package org.nolat.rsircbot.tools;
 public class Calculate {
 
     public static int xpForLevel(int level) {
-        return 0;
+        double value = 0;
+        for (int i = 1; i < level; i++) {
+            value += Math.floor(i + 300f * Math.pow(2f, i / 7f));
+        }
+        value = (int) Math.floor(.25 * value);
+        return (int) value;
     }
 
     public static int levelFromXp(int xp) {
-        return 0;
+        for (int i = 1; i <= 120; i++) {
+            if (xpForLevel(i) > xp) {
+                return i - 1;
+            }
+        }
+        return -1;
     }
 
     public static int xpUntilLevelUp(int xp) {
