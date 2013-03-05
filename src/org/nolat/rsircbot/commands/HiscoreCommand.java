@@ -37,12 +37,19 @@ public class HiscoreCommand extends Command {
                 if (rlx == null) {
                     bot.sendMessage(channel, "Unable to parse " + skill + " information for " + username);
                 } else {
-                    bot.sendMessage(channel,
-                            username + " has level " + rlx.getLevelString() + " " + skill + " (XP: "
-                                    + rlx.getXpString() + "; Rank: "
-                                    + rlx.getRankString() + ") +"
-                                    + RSFormatter.format(Calculate.xpUntilLevelUp(rlx.getXp()))
-                                    + " xp until level up.");
+                    if (skill.equalsIgnoreCase("overall")) {
+                        bot.sendMessage(channel,
+                                username + " has level " + rlx.getLevelString() + " " + skill + " (XP: "
+                                        + rlx.getXpString() + "; Rank: "
+                                        + rlx.getRankString() + ")");
+                    } else {
+                        bot.sendMessage(channel,
+                                username + " has level " + rlx.getLevelString() + " " + skill + " (XP: "
+                                        + rlx.getXpString() + "; Rank: "
+                                        + rlx.getRankString() + ") +"
+                                        + RSFormatter.format(Calculate.xpUntilLevelUp(rlx.getXp()))
+                                        + " xp until level up.");
+                    }
                 }
             } catch (IOException e) {
                 bot.sendMessage(channel, "Unable to retrieve hiscore information for " + username);

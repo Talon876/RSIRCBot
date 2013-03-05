@@ -23,7 +23,6 @@ public class XPForLevelCommand extends Command {
                 int level = Integer.parseInt(args[1]);
                 if (level > 1 && level < 121) {
                     int xpForLevel = Calculate.xpForLevel(level);
-
                     bot.sendMessage(channel, "Level " + level + " requires " + RSFormatter.format(xpForLevel) + " xp.");
                 } else {
                     bot.sendMessage(channel, "That level is outside the valid range [2-120].");
