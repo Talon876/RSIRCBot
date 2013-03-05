@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.PircBot;
+import org.nolat.rsircbot.commands.Command;
 import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
@@ -34,7 +35,34 @@ public class RSIRCBot extends PircBot {
         System.out.println("nick: " + getNick());
         if (!sender.equalsIgnoreCase(getNick())) {
             sendMessage(channel, Greetings.getRandomGreeting() + " " + sender
-                    + ", type !help to view help for this bot.");
+                    + ", type !help to view help for this bot. Send commands directly to the bot with /msg "
+                    + getNick() + " !help");
+        } else {
+            sendMessage(channel, Greetings.getRandomGreeting()
+                    + " everybody! type !help to view help for this bot. Send commands directly to the bot with /msg "
+                    + getNick() + " !help");
         }
     }
+
+    @Override
+    protected void onMessage(String channel, String sender, String login, String hostname, String message) {
+        super.onMessage(channel, sender, login, hostname, message);
+        process(channel, sender, message);
+    }
+
+    @Override
+    protected void onPrivateMessage(String sender, String login, String hostname, String message) {
+        super.onPrivateMessage(sender, login, hostname, message);
+        process(sender, sender, message);
+    }
+
+    private void process(String target, String sender, String message) {
+        Command command = Command.getCommand(message);
+        if (command != null) {
+            command.executeCommand(this, target, sender, message);
+        } else {
+            System.out.println(message + " wasn't a command");
+        }
+    }
+
 }
