@@ -2,17 +2,30 @@ package org.nolat.rsircbot.tools;
 
 public class Calculate {
 
-    public int xpForLevel(int level) {
+    public static int xpForLevel(int level) {
         return 0;
     }
 
-    public int levelFromXp(int xp) {
+    public static int levelFromXp(int xp) {
         return 0;
     }
 
-    public int xpUntilLevelUp(int xp) {
+    public static int xpUntilLevelUp(int xp) {
         int level = levelFromXp(xp);
         int xpForNextLevel = xpForLevel(level + 1);
         return xpForNextLevel - xp;
+    }
+
+    public static int combatLevel(int atk, int str, int def, int prayer, int range, int magic, int hp) {
+
+        double baseLvl = (def + hp + Math.floor(prayer / 2)) * 0.25;
+
+        double meleeLvl = (atk + str) * 0.325;
+        double rangerLvl = Math.floor(range * 1.5) * 0.325;
+        double mageLvl = Math.floor(magic * 1.5) * 0.325;
+
+        baseLvl = baseLvl + Math.max(meleeLvl, (Math.max(rangerLvl, mageLvl)));
+
+        return (int) baseLvl;
     }
 }

@@ -37,6 +37,7 @@ public class RankLevelXp {
         return RSFormatter.format(getXp());
     }
 
+
     @Override
     public String toString() {
         return "Rank: " + getRankString() + "; Level: " + getLevelString() + "; XP: " + getXpString();

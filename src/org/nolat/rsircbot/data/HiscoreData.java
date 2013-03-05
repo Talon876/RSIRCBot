@@ -7,6 +7,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 
+import org.nolat.rsircbot.tools.Calculate;
+
 public class HiscoreData {
     private static final String baseUrl = "http://sk.eliteazza.com/index_lite.ws?player=";
     private String username;
@@ -32,7 +34,6 @@ public class HiscoreData {
                 RankLevelXp rlx = new RankLevelXp(tokens[0], tokens[1], tokens[2]);
                 if (c <= skillNames.length) {
                     hiscores.put(skillNames[c], rlx);
-                    System.out.println("Added " + skillNames[c] + ": " + rlx.toString());
                 }
                 c++;
             }
@@ -42,5 +43,112 @@ public class HiscoreData {
 
     public RankLevelXp getDataForSkill(String skill) {
         return hiscores.get(skill.toLowerCase());
+    }
+
+    public int getCombatLevel() {
+        int atk = hiscores.get("attack").getLevel();
+        int str = hiscores.get("strength").getLevel();
+        int def = hiscores.get("defence").getLevel();
+        int prayer = hiscores.get("prayer").getLevel();
+        int range = hiscores.get("ranged").getLevel();
+        int magic = hiscores.get("magic").getLevel();
+        int hp = hiscores.get("hitpoints").getLevel();
+        return Calculate.combatLevel(atk, str, def, prayer, range, magic, hp);
+    }
+
+    public RankLevelXp getOverall() {
+        return getDataForSkill("overall");
+    }
+
+    public RankLevelXp getAttack() {
+        return getDataForSkill("attack");
+    }
+
+    public RankLevelXp getDefence() {
+        return getDataForSkill("defence");
+    }
+
+    public RankLevelXp getStrength() {
+        return getDataForSkill("strength");
+    }
+
+    public RankLevelXp getHitpoints() {
+        return getDataForSkill("hitpoints");
+    }
+
+    public RankLevelXp getRanged() {
+        return getDataForSkill("ranged");
+    }
+
+    public RankLevelXp getPrayer() {
+        return getDataForSkill("prayer");
+    }
+
+    public RankLevelXp getMagic() {
+        return getDataForSkill("magic");
+    }
+
+    public RankLevelXp getCooking() {
+        return getDataForSkill("cooking");
+    }
+
+    public RankLevelXp getWoodcutting() {
+        return getDataForSkill("woodcutting");
+    }
+
+    public RankLevelXp getFletching() {
+        return getDataForSkill("fletching");
+    }
+
+    public RankLevelXp getFishing() {
+        return getDataForSkill("fishing");
+    }
+
+    public RankLevelXp getFiremaking() {
+        return getDataForSkill("firemaking");
+    }
+
+    public RankLevelXp getCrafting() {
+        return getDataForSkill("crafting");
+    }
+
+    public RankLevelXp getSmithing() {
+        return getDataForSkill("smithing");
+    }
+
+    public RankLevelXp getMining() {
+        return getDataForSkill("mining");
+    }
+
+    public RankLevelXp getHerblore() {
+        return getDataForSkill("herblore");
+    }
+
+    public RankLevelXp getAgility() {
+        return getDataForSkill("agility");
+    }
+
+    public RankLevelXp getThieving() {
+        return getDataForSkill("thieving");
+    }
+
+    public RankLevelXp getSlayer() {
+        return getDataForSkill("slayer");
+    }
+
+    public RankLevelXp getFarming() {
+        return getDataForSkill("farming");
+    }
+
+    public RankLevelXp getRunecraft() {
+        return getDataForSkill("runecraft");
+    }
+
+    public RankLevelXp getHunter() {
+        return getDataForSkill("hunter");
+    }
+
+    public RankLevelXp getConstruction() {
+        return getDataForSkill("construction");
     }
 }

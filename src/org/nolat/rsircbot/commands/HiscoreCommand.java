@@ -23,6 +23,12 @@ public class HiscoreCommand extends Command {
         } else {
             String username = args[1];
             String skill = args[2];
+
+            //make corrections to arguments
+            if (skill.equalsIgnoreCase("defense")) {
+                skill = "defence";
+            }
+
             try {
                 HiscoreData hiscores = new HiscoreData(username);
                 RankLevelXp rlx = hiscores.getDataForSkill(skill);

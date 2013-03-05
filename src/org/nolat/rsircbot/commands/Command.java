@@ -10,6 +10,7 @@ public abstract class Command {
         new PingCommand();
         new HelpCommand();
         new HiscoreCommand();
+        new CombatCommand();
     }
 
     String command;
