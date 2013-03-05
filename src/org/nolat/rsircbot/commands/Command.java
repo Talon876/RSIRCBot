@@ -9,6 +9,7 @@ public abstract class Command {
     static {
         new PingCommand();
         new HelpCommand();
+        new HiscoreCommand();
     }
 
     String command;
@@ -45,6 +46,10 @@ public abstract class Command {
 
     public String getArgString() {
         return argString;
+    }
+
+    public String getUsageString() {
+        return "Usage: " + command + " " + argString;
     }
 
     public void setArgString(String argString) {
@@ -90,11 +95,9 @@ public abstract class Command {
     public static Command getCommand(String message) {
         Command cmd = null;
         if (message.startsWith("!")) {
-            System.out.println("might be a command");
             String[] tokens = message.split(" ");
             String commandString = tokens[0].replace("!", "");
             for (Command c : commands) {
-                System.out.println("check if " + commandString + " is the command for " + c.command);
                 if (c.matchesString(commandString)) {
                     cmd = c;
                     break;
