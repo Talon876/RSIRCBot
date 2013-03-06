@@ -10,6 +10,8 @@ import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
+    private String qotd = "No QOTD has been set, use !qotd to set it.";
+
     public RSIRCBot(String name, String hostname, int port, String channel) {
         setName(name);
         setAutoNickChange(true);
@@ -42,6 +44,7 @@ public class RSIRCBot extends PircBot {
                     + " everybody! type !help to view help for this bot. Send commands directly to the bot with /msg "
                     + getNick() + " !help");
         }
+        sendMessage(channel, "QOTD: " + qotd);
     }
 
     @Override
@@ -63,6 +66,14 @@ public class RSIRCBot extends PircBot {
         } else {
             System.out.println(message + " wasn't a command");
         }
+    }
+
+    public String getQotd() {
+        return qotd;
+    }
+
+    public void setQotd(String qotd) {
+        this.qotd = qotd;
     }
 
 }

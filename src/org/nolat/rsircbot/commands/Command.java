@@ -13,6 +13,7 @@ public abstract class Command {
         new CombatCommand();
         new XPForLevelCommand();
         new MapCommand();
+        new QotdCommand();
     }
 
     String command;
