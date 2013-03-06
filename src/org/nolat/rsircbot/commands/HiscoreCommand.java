@@ -7,6 +7,7 @@ import org.nolat.rsircbot.data.HiscoreData;
 import org.nolat.rsircbot.data.RankLevelXp;
 import org.nolat.rsircbot.tools.Calculate;
 import org.nolat.rsircbot.tools.RSFormatter;
+import org.nolat.rsircbot.tools.Spellcheck;
 
 public class HiscoreCommand extends Command {
 
@@ -27,9 +28,7 @@ public class HiscoreCommand extends Command {
             String skill = args[2];
 
             //make corrections to arguments
-            if (skill.equalsIgnoreCase("defense")) {
-                skill = "defence";
-            }
+            skill = Spellcheck.correctSpelling(skill);
 
             try {
                 HiscoreData hiscores = new HiscoreData(username);

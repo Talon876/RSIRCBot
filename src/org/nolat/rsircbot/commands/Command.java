@@ -14,6 +14,7 @@ public abstract class Command {
         new XPForLevelCommand();
         new MapCommand();
         new QotdCommand();
+        new CompareCommand();
     }
 
     String command;
