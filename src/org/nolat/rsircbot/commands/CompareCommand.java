@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.nolat.rsircbot.RSIRCBot;
 import org.nolat.rsircbot.data.HiscoreData;
 import org.nolat.rsircbot.data.RankLevelXp;
+import org.nolat.rsircbot.tools.Names;
 import org.nolat.rsircbot.tools.RSFormatter;
 import org.nolat.rsircbot.tools.Spellcheck;
 
@@ -22,12 +23,10 @@ public class CompareCommand extends Command {
         if (args.length != 4) {
             bot.sendMessage(channel, getUsageString());
         } else {
-            String username1 = args[1];
-            String username2 = args[2];
-            String skill = args[3];
+            String username1 = Names.processUsername(args[1], executor);
+            String username2 = Names.processUsername(args[2], executor);
 
-            //make corrections to arguments
-            skill = Spellcheck.correctSpelling(skill);
+            String skill = Spellcheck.correctSpelling(args[3]);
 
             try {
                 HiscoreData user1hs = new HiscoreData(username1);

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.nolat.rsircbot.RSIRCBot;
 import org.nolat.rsircbot.data.HiscoreData;
+import org.nolat.rsircbot.tools.Names;
 
 public class CombatCommand extends Command {
 
@@ -20,7 +21,7 @@ public class CombatCommand extends Command {
         if (args.length != 2) {
             bot.sendMessage(channel, getUsageString());
         } else {
-            String username = args[1];
+            String username = Names.processUsername(args[1], executor);
 
             try {
                 HiscoreData hiscores = new HiscoreData(username);
@@ -34,8 +35,6 @@ public class CombatCommand extends Command {
             } catch (IOException e) {
                 bot.sendMessage(channel, "Unable to retrieve combat information for " + username);
             }
-
         }
     }
-
 }

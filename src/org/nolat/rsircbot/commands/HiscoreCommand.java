@@ -6,6 +6,7 @@ import org.nolat.rsircbot.RSIRCBot;
 import org.nolat.rsircbot.data.HiscoreData;
 import org.nolat.rsircbot.data.RankLevelXp;
 import org.nolat.rsircbot.tools.Calculate;
+import org.nolat.rsircbot.tools.Names;
 import org.nolat.rsircbot.tools.RSFormatter;
 import org.nolat.rsircbot.tools.Spellcheck;
 
@@ -24,11 +25,8 @@ public class HiscoreCommand extends Command {
         if (args.length != 3) {
             bot.sendMessage(channel, getUsageString());
         } else {
-            String username = args[1];
-            String skill = args[2];
-
-            //make corrections to arguments
-            skill = Spellcheck.correctSpelling(skill);
+            String username = Names.processUsername(args[1], executor);
+            String skill = Spellcheck.correctSpelling(args[2]);
 
             try {
                 HiscoreData hiscores = new HiscoreData(username);

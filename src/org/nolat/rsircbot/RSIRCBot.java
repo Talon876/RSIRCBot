@@ -15,7 +15,7 @@ public class RSIRCBot extends PircBot {
     public RSIRCBot(String name, String hostname, int port, String channel) {
         setName(name);
         setAutoNickChange(true);
-        setMessageDelay(0);
+        setMessageDelay(50);
 
         try {
             connect(hostname, port);

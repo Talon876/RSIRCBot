@@ -15,6 +15,7 @@ public abstract class Command {
         new MapCommand();
         new QotdCommand();
         new CompareCommand();
+        new RSNCommand();
     }
 
     String command;
