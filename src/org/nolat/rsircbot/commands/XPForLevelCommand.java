@@ -7,8 +7,9 @@ import org.nolat.rsircbot.tools.RSFormatter;
 public class XPForLevelCommand extends Command {
 
     public XPForLevelCommand() {
-        super("xpforlevel");
+        super("level");
         addAlternativeCommand("xfl");
+        addAlternativeCommand("xpforlevel");
         setHelpMessage("Calculates how much xp is needed for a certain level");
         setArgString("<level>");
     }
