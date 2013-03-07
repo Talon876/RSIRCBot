@@ -16,25 +16,29 @@ public class PriceCommand extends Command {
 
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
-        String item = message.substring("!price ".length(), message.length()).replaceAll(" ", "_");
+        if (message.length() == "!price".length()) {
+            bot.sendMessage(channel, getUsageString());
+        } else {
+            String item = message.substring("!price ".length(), message.length()).replaceAll(" ", "_");
 
-        ItemSearch results = null;
-        try {
-            results = new ItemSearch(item);
-        } catch (LookupException e) {
-            bot.sendMessage(channel, e.getMessage());
-        }
+            ItemSearch results = null;
+            try {
+                results = new ItemSearch(item);
+            } catch (LookupException e) {
+                bot.sendMessage(channel, e.getMessage());
+            }
 
-        if (results != null) {
-            ItemData matchedItem = results.getMatchedItem();
-            if (matchedItem == null) {
-                bot.sendMessage(channel, "Search was too broad, try one of these: " + results.getSuggestionString());
-            } else {
-                bot.sendMessage(
-                        channel,
-                        matchedItem.getName() + " costs " + matchedItem.getPriceString() + " gp. (Low: "
-                                + matchedItem.getRecentLowString() + "; High: " + matchedItem.getRecentHighString()
-                                + ")");
+            if (results != null) {
+                ItemData matchedItem = results.getMatchedItem();
+                if (matchedItem == null) {
+                    bot.sendMessage(channel, "Search was too broad, try one of these: " + results.getSuggestionString());
+                } else {
+                    bot.sendMessage(
+                            channel,
+                            matchedItem.getName() + " costs " + matchedItem.getPriceString() + " gp. (Low: "
+                                    + matchedItem.getRecentLowString() + "; High: " + matchedItem.getRecentHighString()
+                                    + ")");
+                }
             }
         }
     }

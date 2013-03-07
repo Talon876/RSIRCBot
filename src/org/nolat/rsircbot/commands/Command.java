@@ -16,6 +16,8 @@ public abstract class Command {
         new CompareCommand();
         new RSNCommand();
         new PriceCommand();
+        new WTSCommand();
+        new WTBCommand();
     }
 
     String command;
