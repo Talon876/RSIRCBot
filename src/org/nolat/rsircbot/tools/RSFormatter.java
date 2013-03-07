@@ -12,4 +12,8 @@ public class RSFormatter {
     public static String format(double num) {
         return formatter.format(num);
     }
+
+    public static String format(String string) {
+        return format(Float.parseFloat(string));
+    }
 }

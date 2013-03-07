@@ -7,7 +7,6 @@ import org.nolat.rsircbot.RSIRCBot;
 public abstract class Command {
     public static ArrayList<Command> commands = new ArrayList<Command>();
     static {
-        new PingCommand();
         new HelpCommand();
         new HiscoreCommand();
         new CombatCommand();
@@ -16,6 +15,7 @@ public abstract class Command {
         new QotdCommand();
         new CompareCommand();
         new RSNCommand();
+        new PriceCommand();
     }
 
     String command;
