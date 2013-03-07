@@ -19,3 +19,4 @@ build
 .project
 .settings
 .cache
+src/org/nolat/rsircbot/TestCode.java
