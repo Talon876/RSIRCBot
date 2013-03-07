@@ -18,6 +18,7 @@ public abstract class Command {
         new PriceCommand();
         new WTSCommand();
         new WTBCommand();
+        new CalcCommand();
     }
 
     String command;

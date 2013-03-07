@@ -12,7 +12,7 @@ public class QotdCommand extends Command {
 
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
-        String qotd = message.substring("!qotd".length(), message.length());
+        String qotd = message.substring("!qotd ".length(), message.length());
         bot.setQotd(qotd);
         bot.sendMessage(channel, "QOTD updated.");
     }
