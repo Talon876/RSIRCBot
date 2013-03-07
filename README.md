@@ -84,3 +84,4 @@ Future Development
 
 * Make the bot persist data (qotd, rsn names)
 * Quest dependency data (for example !requirements recipe for disaster could return something like this: http://i4.minus.com/iHFTgwcFIMJKA.png)
+* Basic skill calculator features
