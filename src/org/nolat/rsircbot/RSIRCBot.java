@@ -31,6 +31,12 @@ public class RSIRCBot extends PircBot {
     }
 
     @Override
+    protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname,
+            String channel) {
+        this.joinChannel(channel); //join channel we were invited to
+    }
+
+    @Override
     protected void onJoin(String channel, String sender, String login, String hostname) {
         super.onJoin(channel, sender, login, hostname);
         System.out.println("sender: " + sender);

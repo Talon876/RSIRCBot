@@ -14,7 +14,7 @@ public class Main {
 
             FlaggedOption nameOpt = new FlaggedOption("name");
             nameOpt.setStringParser(JSAP.STRING_PARSER);
-            nameOpt.setDefault("Guthiiiiiiiix");
+            nameOpt.setDefault("Skill-Bot");
             nameOpt.setShortFlag('n');
             nameOpt.setLongFlag("name");
             nameOpt.setHelp("The name of the bot");
