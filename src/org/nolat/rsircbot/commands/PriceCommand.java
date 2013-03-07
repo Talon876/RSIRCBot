@@ -36,11 +36,6 @@ public class PriceCommand extends Command {
                                 + matchedItem.getRecentLowString() + "; High: " + matchedItem.getRecentHighString()
                                 + ")");
             }
-            if (results.getResults().length > 1) {
-
-            } else {
-                System.out.println(results.getResults()[0].getPriceString());
-            }
         }
     }
 
