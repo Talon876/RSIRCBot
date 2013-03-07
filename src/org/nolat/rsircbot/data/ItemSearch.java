@@ -15,7 +15,7 @@ public class ItemSearch {
     ItemData[] results;
 
     public ItemSearch(String item) throws LookupException {
-        this.item = item.replaceAll(" ", "_");
+        this.item = item.replaceAll(" ", "_").replaceAll("'", "_");
         refreshData();
     }
 
