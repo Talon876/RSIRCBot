@@ -23,6 +23,7 @@ Here is a list of commands the bot currently knows:
     !level <level> - Calculates how much xp is needed for a certain level
     !map - Returns a link to an interactive RuneScape map
     !qotd <message> - Sets the bot QOTD that is displayed to everyone who joins
+    !toggle <service name> - Used to toggle services (greeting, qotd) on or off
     !compare <player1> <player2> <skillname> - Compare's a skill between two players.
     !rsn <name> - Assigns a RSN to your irc nickname. Allows you to use 'me' as a substitute for your RSN in commands that require a RSN.
     !price <item name> - Retrieves the current market value of an item
@@ -48,7 +49,7 @@ Then once you have the jar, see the How to Run section below to be able to run i
 How To Compile
 --------------
 
-Obtain the code with `git clone git@github.com:Talon876/RSIRCBot.git`
+Obtain the code with `git clone git@github.com:Talon876/RSIRCBot.git` or download [the zip file](https://github.com/Talon876/RSIRCBot/archive/master.zip).
 
 CD in to the directory with build.xml
 
