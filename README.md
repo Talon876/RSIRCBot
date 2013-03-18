@@ -35,14 +35,15 @@ Get the bot to join your channel
 If you want the bot to join your channel on irc.swiftirc.net but don't want to host it yourself you can try inviting it by typing `/invite Skill-Bot #some_channel`. However this will only work if I have my bot running which isn't necessarily 24/7 and it is prone to restarting on occasion while I develop it.
 
 
-#Hosting Yourself
+Hosting Yourself
+----------------
 Requirements:
 
 * Java must be installed
 * Know how to run jars from the command line
 
 In order to host the bot yourself you will have to compile the source in to an executable jar (see below).
-Then once you have the jar, see the How to Use section below to be able to run it.
+Then once you have the jar, see the How to Run section below to be able to run it.
 
 How To Compile
 --------------
@@ -56,32 +57,81 @@ Run `ant jar` to build the executable jar.
 
 How To Run
 ----------
+Create a settings.json file then run the jar.
 
-Usage: java -jar RSIRCBot.jar [options]
-Example: java -jar RSIRCBot.jar --name "Guthix" -c #some_channel
+Settings File:
 
-List of options:
-  [(-n|--name) <name>]
-        The name of the bot (default: Skill-Bot)
+    {
+      "name": "Skill-Bot",
+      "server": "irc.swiftirc.net",
+      "port": 6667,
+      "debug": false,
+      "channels": [
+        {
+          "name": "#testbot",
+          "greeting": true,
+          "qotd": {
+            "message": "The qotd has not been set. Use !qotd to set it or !toggle qotd to turn it off.",
+            "display": "true"
+          }
+        }
+      ],
+      "users": [
+        {
+          "name": "KingKarthas",
+          "rsn": "King_Karthas"
+        }
+      ]
+    }
 
-  (-c|--channel) <channel>
-        The name of the channel the bot should join
+Settings Description:
 
-  [(-s|--server) <server>]
-        The server to connect to (default: irc.swiftirc.net)
+|Key|Description|
+|---|-----------|
+|name| name of the irc bot|
+|server | the server to connect to|
+|port | the port to connect to the server on|
+|debug | whether or not to print debug info|
+|channels | an array of channels to connect to and their individual settings|
+|channel.name | the name of the channel to join|
+|channel.greeting | whether or not to display the help greeting when people join the channel|
+|channel.qotd.message | the qotd message displayed to users if its enabled|
+|channel.qotd.display | whether or not to display the qotd when people join the channel|
+|users | an array of users mapping irc nicknames to rsn names|
+|user.name | the irc nickname of a user|
+|user.rsn | the rsn for the user|
 
-  [(-p|--port) <port>]
-        The port number to connect to the server with (default: 6667)
+Running the jar:
+
+    Usage: java -jar RSIRCBot.jar [options]
+    Example: java -jar RSIRCBot.jar -f settings.json
+
+    Help:
+      [-h|--help]
+            Displays this help message
+
+      [(-f|--file) <file>]
+            The path to the file to load settings from (default: settings.json)
 
 
 Known Problems
 --------------
-*  The bot doesn't remember your RSN set with !rsn after restarting. This is on my to do list.
 *  Have to manually enter underscores in RSNs
 
 Future Development
 ------------------
 
-* Make the bot persist data (qotd, rsn names)
 * Quest dependency data (for example !requirements recipe for disaster could return something like this: http://i4.minus.com/iHFTgwcFIMJKA.png)
 * Basic skill calculator features
+* More intelligent command/argument parsing that allows for quoted arguments, defaults, and possibly switches.
+
+Change Log
+----------
+*  Version 1.1a
+    * Added channel specific qotd and settings
+    * Saves RSN's set with !rsn between restarts
+    * Rejoins channels it was in on restart
+    * Removed command line flags in favor of reading settings from a file
+    * Added !toggle command for toggling qotd/greeting
+*  Version 1.0a
+    * Initial release

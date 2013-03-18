@@ -21,7 +21,7 @@ public class CombatCommand extends Command {
         if (args.length != 2) {
             bot.sendMessage(channel, getUsageString());
         } else {
-            String username = Names.processUsername(args[1], executor);
+            String username = Names.processUsername(bot, args[1], executor);
 
             try {
                 HiscoreData hiscores = new HiscoreData(username);

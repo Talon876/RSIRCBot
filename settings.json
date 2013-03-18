@@ -1,0 +1,22 @@
+{
+  "name": "Skill-Bot[Debug]",
+  "server": "irc.swiftirc.net",
+  "port": 6667,
+  "debug": true,
+  "channels": [
+    {
+      "name": "#testbot",
+      "greeting": true,
+      "qotd": {
+        "message": "Sample qotd",
+        "display": "true"
+      }
+    }
+  ],
+  "users": [
+    {
+      "name": "KingKarthas",
+      "rsn": "King_Karthas"
+    }
+  ]
+}

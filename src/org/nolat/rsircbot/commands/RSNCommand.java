@@ -19,7 +19,7 @@ public class RSNCommand extends Command {
             bot.sendMessage(channel, getUsageString()); //send the command's usage string
         } else {
             String rsn = args[1];
-            Names.addName(executor, rsn);
+            Names.addName(bot, executor, rsn);
             bot.sendMessage(channel, "Registered '" + rsn + "' to " + executor
                     + ". You may now use 'me' in place of RSN's in other commands.");
         }

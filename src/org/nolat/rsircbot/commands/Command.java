@@ -13,6 +13,7 @@ public abstract class Command {
         new XPForLevelCommand();
         new MapCommand();
         new QotdCommand();
+        new ToggleCommand();
         new CompareCommand();
         new RSNCommand();
         new PriceCommand();

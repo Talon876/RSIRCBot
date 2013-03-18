@@ -6,19 +6,23 @@ import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.PircBot;
 import org.nolat.rsircbot.commands.Command;
+import org.nolat.rsircbot.settings.Settings;
+import org.nolat.rsircbot.settings.json.Channel;
 import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
-    private String qotd = "No QOTD has been set, use !qotd to set it.";
+    public static final String VERSION = "1.1a";
 
-    public RSIRCBot(String name, String hostname, int port, String channel) {
-        setName(name);
+    private Settings settings;
+
+    public RSIRCBot(Settings settings) {
+        this.settings = settings;
+        setName(settings.getName());
         setAutoNickChange(true);
         setMessageDelay(50);
-
         try {
-            connect(hostname, port);
+            connect(settings.getServer(), settings.getPort());
         } catch (NickAlreadyInUseException e) {
             System.out.println("Nick was in use.");
             e.printStackTrace();
@@ -27,30 +31,51 @@ public class RSIRCBot extends PircBot {
         } catch (IrcException e) {
             e.printStackTrace();
         }
-        joinChannel(channel);
+        for (Channel c : settings.getChannels()) {
+            joinChannel(c.getName());
+        }
     }
 
     @Override
     protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname,
             String channel) {
+        Channel c = new Channel(channel, true, true, "Use !qotd to set the qotd or !toggle qotd to turn it off.");
+        settings.addChannel(c);
         this.joinChannel(channel); //join channel we were invited to
     }
 
     @Override
     protected void onJoin(String channel, String sender, String login, String hostname) {
         super.onJoin(channel, sender, login, hostname);
-        System.out.println("sender: " + sender);
-        System.out.println("nick: " + getNick());
         if (!sender.equalsIgnoreCase(getNick())) {
-            sendMessage(channel, Greetings.getRandomGreeting() + " " + sender
+            onUserJoin(channel, sender);
+        } else {
+            onBotJoin(channel);
+        }
+    }
+
+    private void onUserJoin(String channel, String user) {
+        Channel c = settings.getChannel(channel);
+        if (c.shouldDisplayGreeting()) {
+            sendMessage(channel, Greetings.getRandomGreeting() + " " + user
                     + ", type !help to view help for this bot. Send commands directly to the bot with /msg "
                     + getNick() + " !help");
-        } else {
-            sendMessage(channel, Greetings.getRandomGreeting()
-                    + " everybody! type !help to view help for this bot. Send commands directly to the bot with /msg "
-                    + getNick() + " !help");
         }
-        sendMessage(channel, "QOTD: " + qotd);
+
+        if (c.shouldDisplayQotd()) {
+            sendMessage(channel, "QOTD: " + c.getQotdMessage());
+        }
+    }
+
+    private void onBotJoin(String channel) {
+        Channel c = settings.getChannel(channel);
+        sendMessage(channel, Greetings.getRandomGreeting()
+                + " everybody! type !help or /msg "
+                + getNick() + " !help to view help. (Version: " + VERSION + ")");
+
+        if (c.shouldDisplayQotd()) {
+            sendMessage(channel, "QOTD: " + c.getQotdMessage());
+        }
     }
 
     @Override
@@ -74,12 +99,7 @@ public class RSIRCBot extends PircBot {
         }
     }
 
-    public String getQotd() {
-        return qotd;
+    public Settings getSettings() {
+        return settings;
     }
-
-    public void setQotd(String qotd) {
-        this.qotd = qotd;
-    }
-
 }

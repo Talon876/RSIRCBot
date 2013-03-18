@@ -12,13 +12,12 @@ public class QotdCommand extends Command {
 
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
-        String qotd = message.substring("!qotd ".length(), message.length());
-        if (executor.equals("KingKarthas")) {
-            bot.setQotd(qotd);
+        if (message.length() > 7) {
+            String qotd = message.substring("!qotd ".length(), message.length());
+            bot.getSettings().setQotd(channel, qotd);
             bot.sendMessage(channel, "QOTD updated.");
         } else {
-            bot.sendMessage(channel, "You can't update the QOTD.");
+            bot.sendMessage(channel, "QOTD not long enough.");
         }
     }
-
 }

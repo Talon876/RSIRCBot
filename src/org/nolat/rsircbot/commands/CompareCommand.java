@@ -23,8 +23,8 @@ public class CompareCommand extends Command {
         if (args.length != 4) {
             bot.sendMessage(channel, getUsageString());
         } else {
-            String username1 = Names.processUsername(args[1], executor);
-            String username2 = Names.processUsername(args[2], executor);
+            String username1 = Names.processUsername(bot, args[1], executor);
+            String username2 = Names.processUsername(bot, args[2], executor);
 
             String skill = Spellcheck.correctSpelling(args[3]);
 

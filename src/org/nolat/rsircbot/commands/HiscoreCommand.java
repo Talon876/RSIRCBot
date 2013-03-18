@@ -25,7 +25,7 @@ public class HiscoreCommand extends Command {
         if (args.length != 3) {
             bot.sendMessage(channel, getUsageString());
         } else {
-            String username = Names.processUsername(args[1], executor);
+            String username = Names.processUsername(bot, args[1], executor);
             String skill = Spellcheck.correctSpelling(args[2]);
 
             try {
