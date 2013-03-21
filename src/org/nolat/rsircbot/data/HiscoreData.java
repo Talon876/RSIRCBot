@@ -10,7 +10,7 @@ import java.util.HashMap;
 import org.nolat.rsircbot.tools.Calculate;
 
 public class HiscoreData {
-    private static final String baseUrl = "http://sk.eliteazza.com/index_lite.ws?player=";
+    private static final String baseUrl = "http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=";
     private String username;
     private String[] skillNames = { "overall", "attack", "defence", "strength", "hitpoints",
             "ranged", "prayer", "magic", "cooking", "woodcutting", "fletching",
