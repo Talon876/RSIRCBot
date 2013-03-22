@@ -1,0 +1,40 @@
+!seen command.
+This command would keep track of all irc users and store when they last spoke, or when they disconnected.
+Usage String: !seen <irc nick>
+Example output: KingKarthas last spoke 8 minutes, 48 seconds ago.
+                KingKarthas left the channel 2 hours, 28 minutes, 29 seconds ago.
+
+!news command
+This command would retrieve the most recent news from @OldSchoolRS.
+Usage String: !news <number of news items>
+Example output: 8h ago - The servers will be rebooted shortly to apply some fixes. Check the Patch Notes for more details http://bit.ly/13khfzB     - Mod Michelle
+
+Add real logging.
+In order to aid in finding the reason the bot randomly disconnects, add real logging using log4j.
+
+Services
+Services would be something that runs in the background on a separate thread. An example service would be NewsService which would wait for new tweets from @OldSchoolRS and when they are received, push them out to all channels.
+Services can also be interacted with using commands. For example. QOTD and Greetings would be refactored in to a service. Additionally the !toggle command would be specificially for services.
+
+Better argument parsing.
+Some sort of argument parsing that allows default and optional parameters. Maybe use JSAP or some simpler alternative.
+
+Upgrade to pircbotx.
+Pircbotx would allow use of maven as the build system as well as many other improvements.
+
+Privileged commands.
+Allow some commands to only be ran by OPs, HOPs, or Owners. 
+
+Better build script:
+Add a target for deploying to my VPS.
+Add generated run scripts.
+Add scripts necessary for running the bot as a linux service
+
+Add MySQL database for storing long term information and anything that there will be a lot of (for example, the people for the !seen command).
+Start designing the schema for statistic tracking and quest information.
+
+!quest command
+The quest command would generate dependency graphs for any quest.
+This would involve some sort of spelling suggestion tool as well as obtaining nicknames/abbreviations for quest names in order to improve UX with a Did you mean? {} reply.
+Usage String: !quest <questname>
+Example reply: Dependency graph for RFD: http://yuml.me/diagram/scruffy/class/3e238568.png
