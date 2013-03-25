@@ -11,7 +11,7 @@ public class MapCommand extends Command {
 
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
-        bot.sendMessage(channel, "An interactive map can be found at http://rsmap.nyro.net/");
+        bot.sendMessage(channel, executor, "An interactive map can be found at http://rsmap.nyro.net/", this);
     }
 
 }

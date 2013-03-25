@@ -17,7 +17,7 @@ public class PriceCommand extends Command {
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
         if (message.length() == "!price".length()) {
-            bot.sendMessage(channel, getUsageString());
+            bot.sendMessage(channel, executor, getUsageString(), this);
         } else {
             String item = message.substring("!price ".length(), message.length()).replaceAll(" ", "_");
 
@@ -25,19 +25,20 @@ public class PriceCommand extends Command {
             try {
                 results = new ItemSearch(item);
             } catch (LookupException e) {
-                bot.sendMessage(channel, e.getMessage());
+                bot.sendMessage(channel, executor, e.getMessage(), this);
             }
 
             if (results != null) {
                 ItemData matchedItem = results.getMatchedItem();
                 if (matchedItem == null) {
-                    bot.sendMessage(channel, "Search was too broad, try one of these: " + results.getSuggestionString());
+                    bot.sendMessage(channel, executor,
+                            "Search was too broad, try one of these: " + results.getSuggestionString(), this);
                 } else {
                     bot.sendMessage(
-                            channel,
+                            channel, executor,
                             matchedItem.getName() + " costs " + matchedItem.getPriceString() + " gp. (Low: "
                                     + matchedItem.getRecentLowString() + "; High: " + matchedItem.getRecentHighString()
-                                    + ")");
+                                    + ")", this);
                 }
             }
         }

@@ -27,9 +27,9 @@ public class CalcCommand extends Command {
 
         }
         if (!answer.isEmpty()) {
-            bot.sendMessage(channel, "Result: " + answer);
+            bot.sendMessage(channel, executor, "Result: " + answer, this);
         } else {
-            bot.sendMessage(channel, "Unable to evaluate expression.");
+            bot.sendMessage(channel, executor, "Unable to evaluate expression.", this);
         }
     }
 

@@ -20,10 +20,10 @@ public class SampleCommand extends Command {
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
         String[] args = message.split(" "); //common to split the message up to parse args. args[0] is the command itself including the '!'
         if (args.length != 3) { // check if the argument list isn't the right size
-            bot.sendMessage(channel, getUsageString()); //send the command's usage string
+            bot.sendMessage(channel, executor, getUsageString(), this); //send the command's usage string
         } else {
             //do the command here
-            bot.sendMessage(channel, "Message"); //send messages back to the channel
+            bot.sendMessage(channel, executor, "Message", this); //send messages back to the channel
         }
     }
 

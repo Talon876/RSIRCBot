@@ -22,6 +22,8 @@ public abstract class Command {
         new CalcCommand();
     }
 
+    private boolean privateReply = true;
+
     String command;
 
     String argString;
@@ -60,6 +62,14 @@ public abstract class Command {
 
     public String getUsageString() {
         return "Usage: " + command + " " + argString;
+    }
+
+    public boolean isPrivateReply() {
+        return privateReply;
+    }
+
+    public void setPrivateReply(boolean privateReply) {
+        this.privateReply = privateReply;
     }
 
     public void setArgString(String argString) {
@@ -104,12 +114,20 @@ public abstract class Command {
      */
     public static Command getCommand(String message) {
         Command cmd = null;
-        if (message.startsWith("!")) {
+        if (message.length() > 1) {
             String[] tokens = message.split(" ");
-            String commandString = tokens[0].replace("!", "");
+            String commandString = tokens[0];
+            boolean privateReply = true;
+            if (commandString.startsWith("!") || commandString.startsWith(".")) {
+                privateReply = true;
+            } else if (commandString.startsWith("@")) {
+                privateReply = false;
+            }
+            commandString = tokens[0].substring(1, tokens[0].length());
             for (Command c : commands) {
                 if (c.matchesString(commandString)) {
                     cmd = c;
+                    cmd.setPrivateReply(privateReply);
                     break;
                 }
             }

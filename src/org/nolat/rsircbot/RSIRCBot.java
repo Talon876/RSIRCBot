@@ -12,7 +12,7 @@ import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
-    public static final String VERSION = "1.1a";
+    public static final String VERSION = "1.1.1a";
 
     private Settings settings;
 
@@ -33,6 +33,16 @@ public class RSIRCBot extends PircBot {
         }
         for (Channel c : settings.getChannels()) {
             joinChannel(c.getName());
+        }
+    }
+
+    @Override
+    protected void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname,
+            String recipientNick, String reason) {
+        if (recipientNick.equalsIgnoreCase(getNick())) {
+            //we were kicked so remove this channel from the settings
+            getSettings().removeChannel(channel);
+
         }
     }
 
@@ -71,7 +81,8 @@ public class RSIRCBot extends PircBot {
         Channel c = settings.getChannel(channel);
         sendMessage(channel, Greetings.getRandomGreeting()
                 + " everybody! type !help or /msg "
-                + getNick() + " !help to view help. (Version: " + VERSION + ")");
+                + getNick() + " !help to view help. (Version: " + VERSION
+                + "; Patch Notes: https://github.com/Talon876/RSIRCBot#Change_Log)");
 
         if (c.shouldDisplayQotd()) {
             sendMessage(channel, "QOTD: " + c.getQotdMessage());
@@ -88,6 +99,14 @@ public class RSIRCBot extends PircBot {
     protected void onPrivateMessage(String sender, String login, String hostname, String message) {
         super.onPrivateMessage(sender, login, hostname, message);
         process(sender, sender, message);
+    }
+
+    public void sendMessage(String channel, String executor, String message, Command command) {
+        if (command.isPrivateReply()) {
+            sendNotice(executor, message);
+        } else {
+            sendMessage(channel, message);
+        }
     }
 
     private void process(String target, String sender, String message) {

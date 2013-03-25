@@ -31,6 +31,8 @@ Here is a list of commands the bot currently knows:
     !wtb <item name> - Returns a list of people selling the specified item
     !calc <expression> - Evaluates simple math expressions
 
+Calling a command using ! or . as a prefix will cause the bot to reply only to you. To get the bot to reply to the whole channel, call a command with @ as the prefix.
+
 Get the bot to join your channel
 --------------------------------
 If you want the bot to join your channel on irc.swiftirc.net but don't want to host it yourself you can try inviting it by typing `/invite Skill-Bot #some_channel`. However this will only work if I have my bot running which isn't necessarily 24/7 and it is prone to restarting on occasion while I develop it.
@@ -126,8 +128,13 @@ Future Development
 * Basic skill calculator features
 * More intelligent command/argument parsing that allows for quoted arguments, defaults, and possibly switches.
 
-Change Log
+Change Log <a id="Change_Log"></a>
 ----------
+*  Version 1.1.1a
+    * Bot won't rejoin channels it was kicked from.
+    * Commands can now be called with @ and . as well as !
+    * Commands now reply using a notice (privately) when called with a . or !
+    * Commands reply publicly to the channel when called with @
 *  Version 1.1a
     * Added channel specific qotd and settings
     * Saves RSN's set with !rsn between restarts

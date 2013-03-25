@@ -12,6 +12,6 @@ public class PingCommand extends Command {
 
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
-        bot.sendMessage(channel, "pong!");
+        bot.sendMessage(channel, executor, "pong!", this);
     }
 }

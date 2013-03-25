@@ -13,18 +13,19 @@ public class ToggleCommand extends Command {
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
         String[] args = message.split(" ");
         if (args.length != 2) {
-            bot.sendMessage(channel, getUsageString());
+            bot.sendMessage(channel, executor, getUsageString(), this);
         } else {
             String service = args[1].trim();
 
             if (service.equalsIgnoreCase("qotd")) {
                 bot.getSettings().toggleQotd(channel);
-                bot.sendMessage(channel, "Toggled qotd.");
+                bot.sendMessage(channel, executor, "Toggled qotd.", this);
             } else if (service.equalsIgnoreCase("greeting")) {
                 bot.getSettings().toggleGreeting(channel);
-                bot.sendMessage(channel, "Toggled greeting.");
+                bot.sendMessage(channel, executor, "Toggled greeting.", this);
             } else {
-                bot.sendMessage(channel, "Service name not recognized. Recognized services: {qotd, greeting}");
+                bot.sendMessage(channel, executor,
+                        "Service name not recognized. Recognized services: {qotd, greeting}", this);
             }
         }
     }

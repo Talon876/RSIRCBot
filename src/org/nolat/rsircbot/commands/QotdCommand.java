@@ -15,9 +15,9 @@ public class QotdCommand extends Command {
         if (message.length() > 7) {
             String qotd = message.substring("!qotd ".length(), message.length());
             bot.getSettings().setQotd(channel, qotd);
-            bot.sendMessage(channel, "QOTD updated.");
+            bot.sendMessage(channel, executor, "QOTD updated.", this);
         } else {
-            bot.sendMessage(channel, "QOTD not long enough.");
+            bot.sendMessage(channel, executor, "QOTD not long enough.", this);
         }
     }
 }

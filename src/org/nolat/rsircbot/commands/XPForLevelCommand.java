@@ -18,18 +18,19 @@ public class XPForLevelCommand extends Command {
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
         String[] args = message.split(" "); //0 is the command
         if (args.length != 2) {
-            bot.sendMessage(channel, getUsageString());
+            bot.sendMessage(channel, executor, getUsageString(), this);
         } else {
             try {
                 int level = Integer.parseInt(args[1]);
                 if (level > 1 && level < 121) {
                     int xpForLevel = Calculate.xpForLevel(level);
-                    bot.sendMessage(channel, "Level " + level + " requires " + RSFormatter.format(xpForLevel) + " xp.");
+                    bot.sendMessage(channel, executor, "Level " + level + " requires " + RSFormatter.format(xpForLevel)
+                            + " xp.", this);
                 } else {
-                    bot.sendMessage(channel, "That level is outside the valid range [2-120].");
+                    bot.sendMessage(channel, executor, "That level is outside the valid range [2-120].", this);
                 }
             } catch (NumberFormatException ex) {
-                bot.sendMessage(channel, "That's not a number!");
+                bot.sendMessage(channel, executor, "That's not a number!", this);
             }
         }
     }

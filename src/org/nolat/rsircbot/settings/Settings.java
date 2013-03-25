@@ -101,6 +101,11 @@ public class Settings {
         save();
     }
 
+    public void removeChannel(String channel) {
+        settings.removeChannel(channel);
+        save();
+    }
+
     public void addUser(User u) {
         settings.addUser(u);
         save();

@@ -68,4 +68,8 @@ public class BotSettings {
     public void addUser(User u) {
         users.add(u);
     }
+
+    public void removeChannel(String channel) {
+        channels.remove(getChannel(channel));
+    }
 }

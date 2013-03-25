@@ -14,12 +14,14 @@ public class HelpCommand extends Command {
         bot.sendMessage(channel, "-----Available Commands-----");
         for (Command c : Command.commands) {
             if (c.getArgString().equals("")) {
-                bot.sendMessage(channel, "!" + c.getCommand() + c.getArgString() + " - " + c.getHelpMessage());
+                bot.sendMessage(channel, executor,
+                        "!" + c.getCommand() + c.getArgString() + " - " + c.getHelpMessage(), this);
             } else {
-                bot.sendMessage(channel, "!" + c.getCommand() + " " + c.getArgString() + " - " + c.getHelpMessage());
+                bot.sendMessage(channel, executor,
+                        "!" + c.getCommand() + " " + c.getArgString() + " - " + c.getHelpMessage(), this);
             }
         }
-        bot.sendMessage(channel, "--------End Commands--------");
+        bot.sendMessage(channel, executor, "--------End Commands--------", this);
     }
 
 }
