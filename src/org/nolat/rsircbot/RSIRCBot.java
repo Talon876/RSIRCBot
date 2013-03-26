@@ -21,6 +21,11 @@ public class RSIRCBot extends PircBot {
         setName(settings.getName());
         setAutoNickChange(true);
         setMessageDelay(50);
+
+        setup();
+    }
+
+    private void setup() {
         try {
             connect(settings.getServer(), settings.getPort());
         } catch (NickAlreadyInUseException e) {
@@ -33,6 +38,21 @@ public class RSIRCBot extends PircBot {
         }
         for (Channel c : settings.getChannels()) {
             joinChannel(c.getName());
+        }
+    }
+
+    @Override
+    protected void onDisconnect() {
+        super.onDisconnect();
+        System.out.println("Why did this happen?");
+        int tries = 0;
+        while (tries < 5 || isConnected()) {
+            System.out.println("Attempting to reconnect... try " + (tries + 1));
+            setup();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+            }
         }
     }
 
