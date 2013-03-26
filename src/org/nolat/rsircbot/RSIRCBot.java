@@ -49,6 +49,7 @@ public class RSIRCBot extends PircBot {
         while (tries < 5 || isConnected()) {
             System.out.println("Attempting to reconnect... try " + (tries + 1));
             setup();
+            tries++;
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
