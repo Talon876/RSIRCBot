@@ -51,7 +51,8 @@ public class WTSCommand extends Command {
                                     + TimeUtils.millisToLongDHMS(offers.get(i).msSincePosted()) + " ago.", this);
                         }
                     } else {
-                        bot.sendMessage(channel, "Could not find anyone buying " + matchedItem.getName());
+                        bot.sendMessage(channel, executor, "Could not find anyone buying " + matchedItem.getName(),
+                                this);
                     }
                 }
             }
