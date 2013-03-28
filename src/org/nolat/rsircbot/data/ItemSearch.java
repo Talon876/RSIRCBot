@@ -21,13 +21,16 @@ public class ItemSearch {
 
     public void refreshData() throws LookupException {
         String jsonData = null;
+        boolean failed = false;
         try {
             jsonData = URLReader.readUrl(baseUrl + item);
         } catch (Exception e) {
+            System.out.println("Failed to retrieve item data for item : " + item);
             e.printStackTrace();
+            failed = true;
         }
 
-        if (jsonData != null) {
+        if (jsonData != null && !failed) {
             Gson gson = new Gson();
             if (jsonData.contains("\"error\"")) {
                 HashMap<String, String> result = gson.fromJson(jsonData, HashMap.class);
@@ -36,7 +39,7 @@ public class ItemSearch {
                 results = gson.fromJson(jsonData, ItemData[].class);
             }
         } else {
-            throw new LookupException("Failed to retrieve data from server");
+            throw new LookupException("Failed to retrieve data from server for '" + item + "'.");
         }
     }
 
