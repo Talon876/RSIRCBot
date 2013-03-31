@@ -42,7 +42,7 @@ public class WTSCommand extends Command {
                         bot.sendMessage(channel, executor,
                                 "--Found " + offers.size() + " people buying " + matchedItem.getName()
                                 + " in the last 12 hours. (Showing most recent)--", this);
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < Math.min(5, offers.size()); i++) {
                             bot.sendMessage(
                                     channel, executor,
                                     "'" + offers.get(i).getRSN() + "' - buying " + offers.get(i).getQuantityString()

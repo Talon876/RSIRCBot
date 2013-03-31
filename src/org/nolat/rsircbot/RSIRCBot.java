@@ -12,7 +12,7 @@ import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
-    public static final String VERSION = "1.1.1a";
+    public static final String VERSION = "1.1.2a";
 
     private Settings settings;
 
@@ -46,13 +46,16 @@ public class RSIRCBot extends PircBot {
         super.onDisconnect();
         System.out.println("Why did this happen?");
         int tries = 0;
-        while (tries < 5 || isConnected()) {
+        while (tries < 5) {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+            }
             System.out.println("Attempting to reconnect... try " + (tries + 1));
             setup();
             tries++;
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+            if (isConnected()) {
+                tries = 5;
             }
         }
     }
@@ -63,7 +66,7 @@ public class RSIRCBot extends PircBot {
         if (recipientNick.equalsIgnoreCase(getNick())) {
             //we were kicked so remove this channel from the settings
             getSettings().removeChannel(channel);
-
+            System.out.println("We got kicked.");
         }
     }
 
@@ -101,9 +104,8 @@ public class RSIRCBot extends PircBot {
     private void onBotJoin(String channel) {
         Channel c = settings.getChannel(channel);
         sendMessage(channel, Greetings.getRandomGreeting()
-                + " everybody! type !help or /msg "
-                + getNick() + " !help to view help. (Version: " + VERSION
-                + "; Patch Notes: https://github.com/Talon876/RSIRCBot#Change_Log)");
+                + " everybody! (Version: " + VERSION
+                + "; Patch Notes: https://github.com/Talon876/RSIRCBot/blob/master/CHANGELOG.md )");
 
         if (c.shouldDisplayQotd()) {
             sendMessage(channel, "QOTD: " + c.getQotdMessage());
@@ -133,7 +135,8 @@ public class RSIRCBot extends PircBot {
     private void process(String target, String sender, String message) {
         Command command = Command.getCommand(message);
         if (command != null) {
-            command.executeCommand(this, target, sender, message);
+            CommandExecutor ce = new CommandExecutor(this, target, sender, message, command);
+            new Thread(ce).start();
         } else {
             System.out.println(message + " wasn't a command");
         }

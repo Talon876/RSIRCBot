@@ -114,7 +114,7 @@ public abstract class Command {
      */
     public static Command getCommand(String message) {
         Command cmd = null;
-        if (message.length() > 1) {
+        if (message.length() > 1 && !message.startsWith(" ")) {
             String[] tokens = message.split(" ");
             String commandString = tokens[0];
             boolean privateReply = true;

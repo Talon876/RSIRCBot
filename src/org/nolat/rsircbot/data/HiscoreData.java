@@ -20,11 +20,12 @@ public class HiscoreData {
     private HashMap<String, RankLevelXp> hiscores = new HashMap<String, RankLevelXp>();
 
     public HiscoreData(String username) throws IOException {
+        this.username = username;
         username = username.replaceAll(" ", "_");
         System.out.println("Fetching hiscore data for " + username);
 
-        URL oracle = new URL(baseUrl + username);
-        URLConnection yc = oracle.openConnection();
+        URL hiscoreUrl = new URL(baseUrl + username);
+        URLConnection yc = hiscoreUrl.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
         String inputLine;
         int c = 0;
@@ -38,7 +39,6 @@ public class HiscoreData {
                 c++;
             }
         }
-
     }
 
     public RankLevelXp getDataForSkill(String skill) {

@@ -8,7 +8,7 @@
 	<property name="docs.dir" location="docs" />
 	<property name="content.dir" location="content" />
 	<property name="lib.dir" location="lib" />
-	<property name="version" value="1.1.1a" />
+	<property name="version" value="1.1.2a" />
 	<property name="mainClass" value="org.nolat.rsircbot.Main" />
 	<tstamp>
 		<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />

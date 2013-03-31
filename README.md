@@ -127,19 +127,3 @@ Future Development
 * Quest dependency data (for example !requirements recipe for disaster could return something like this: http://i4.minus.com/iHFTgwcFIMJKA.png)
 * Basic skill calculator features
 * More intelligent command/argument parsing that allows for quoted arguments, defaults, and possibly switches.
-
-Change Log <a id="Change_Log"></a>
-----------
-*  Version 1.1.1a
-    * Bot won't rejoin channels it was kicked from.
-    * Commands can now be called with @ and . as well as !
-    * Commands now reply using a notice (privately) when called with a . or !
-    * Commands reply publicly to the channel when called with @
-*  Version 1.1a
-    * Added channel specific qotd and settings
-    * Saves RSN's set with !rsn between restarts
-    * Rejoins channels it was in on restart
-    * Removed command line flags in favor of reading settings from a file
-    * Added !toggle command for toggling qotd/greeting
-*  Version 1.0a
-    * Initial release
