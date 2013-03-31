@@ -39,6 +39,7 @@ public class HiscoreData {
                 c++;
             }
         }
+        in.close();
     }
 
     public RankLevelXp getDataForSkill(String skill) {
