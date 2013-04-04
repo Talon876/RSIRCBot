@@ -20,6 +20,7 @@ public abstract class Command {
         new WTSCommand();
         new WTBCommand();
         new CalcCommand();
+        new AlchCommand();
     }
 
     private boolean privateReply = true;

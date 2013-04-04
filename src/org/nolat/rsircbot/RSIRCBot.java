@@ -12,7 +12,7 @@ import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
-    public static final String VERSION = "1.1.2a";
+    public static final String VERSION = "1.1.3a";
 
     private Settings settings;
 
@@ -103,9 +103,12 @@ public class RSIRCBot extends PircBot {
 
     private void onBotJoin(String channel) {
         Channel c = settings.getChannel(channel);
-        sendMessage(channel, Greetings.getRandomGreeting()
-                + " everybody! (Version: " + VERSION
-                + "; Patch Notes: https://github.com/Talon876/RSIRCBot/blob/master/CHANGELOG.md )");
+        sendMessage(
+                channel,
+                Greetings.getRandomGreeting()
+                + " everybody! (Version: "
+                + VERSION
+                + "; Patch Notes: https://github.com/Talon876/RSIRCBot/blob/master/CHANGELOG.md ) Keep in mind this bot is alpha software so there may be sporadic behavior and odd bugs.");
 
         if (c.shouldDisplayQotd()) {
             sendMessage(channel, "QOTD: " + c.getQotdMessage());

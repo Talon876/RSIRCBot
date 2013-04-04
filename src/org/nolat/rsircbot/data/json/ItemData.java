@@ -17,8 +17,20 @@ public class ItemData {
     String recent_high;
     String recent_low;
 
+    public int getHighAlchValue() {
+        return Integer.parseInt(high_alch);
+    }
+
+    public String getHighAlchString() {
+        return RSFormatter.format(high_alch);
+    }
+
     public String getPriceString() {
         return RSFormatter.format(average);
+    }
+
+    public int getPriceValue() {
+        return (int) Double.parseDouble(average);
     }
 
     public List<HistoryData> getHistory() {

@@ -23,23 +23,31 @@ public class HiscoreData {
         this.username = username;
         username = username.replaceAll(" ", "_");
         System.out.println("Fetching hiscore data for " + username);
-
-        URL hiscoreUrl = new URL(baseUrl + username);
-        URLConnection yc = hiscoreUrl.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        String inputLine;
-        int c = 0;
-        while ((inputLine = in.readLine()) != null) {
-            String[] tokens = inputLine.split(",");
-            if (tokens.length == 3) {
-                RankLevelXp rlx = new RankLevelXp(tokens[0], tokens[1], tokens[2]);
-                if (c <= skillNames.length) {
-                    hiscores.put(skillNames[c], rlx);
+        BufferedReader in = null;
+        try {
+            URL hiscoreUrl = new URL(baseUrl + username);
+            URLConnection yc = hiscoreUrl.openConnection();
+            in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+            String inputLine;
+            int c = 0;
+            while ((inputLine = in.readLine()) != null) {
+                String[] tokens = inputLine.split(",");
+                if (tokens.length == 3) {
+                    RankLevelXp rlx = new RankLevelXp(tokens[0], tokens[1], tokens[2]);
+                    if (c <= skillNames.length) {
+                        hiscores.put(skillNames[c], rlx);
+                    }
+                    c++;
                 }
-                c++;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (in != null) {
+                in.close();
             }
         }
-        in.close();
+
     }
 
     public RankLevelXp getDataForSkill(String skill) {

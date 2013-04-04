@@ -1,5 +1,8 @@
 Change Log <a id="Change_Log"></a>
 ----------
+*  Version 1.1.3a
+    * Added !alch command for finding out the high alch value of items using their RS2007 item names
+    * Improved Hiscore parsing reliability
 *  Version 1.1.2a
     * Stability improvements
     * Commands run on a separate thread now
