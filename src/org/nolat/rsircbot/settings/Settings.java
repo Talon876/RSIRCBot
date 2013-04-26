@@ -148,4 +148,9 @@ public class Settings {
         settings.increaseCommandCount();
         save();
     }
+
+    public void addFeedback(String fb) {
+        settings.addFeedback(fb);
+        save();
+    }
 }

@@ -1,5 +1,6 @@
 package org.nolat.rsircbot.settings.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BotSettings {
@@ -90,5 +91,15 @@ public class BotSettings {
 
     public void increaseCommandCount() {
         command_count++;
+    }
+
+    public void addFeedback(String fb) {
+        if (feedback != null) {
+            feedback.add(fb);
+        } else {
+            feedback = new ArrayList<String>();
+            feedback.add(fb);
+        }
+
     }
 }

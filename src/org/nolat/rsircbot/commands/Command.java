@@ -15,6 +15,7 @@ public abstract class Command {
         new QotdCommand();
         new BotStatsCommand();
         new ToggleCommand();
+        new FeedbackCommand();
         new CompareCommand();
         new RSNCommand();
         new PriceCommand();
