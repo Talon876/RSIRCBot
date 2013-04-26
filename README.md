@@ -1,7 +1,9 @@
 Old School RuneScape IRC Bot
 ============================
 
-This is a bot I made for use on the SwiftIRC network, but can be used to join any irc network. It's still in its early stages so there are bound to be bugs and frequent changes.
+This IRC bot is dedicated to only the Old School version of RuneScape. This means all hiscores, prices, xp, etc. will all be for Old School. In addition to RuneScape related commands, there are some commands which are useful for managing IRC.
+
+I made this bot to run on the SwiftIRC network, but it can be used to join any IRC network. It's still in its early stages so there are bound to be bugs and frequent changes.
 
 Main Features
 --------
@@ -10,7 +12,8 @@ Main Features
 * Hiscore Comparison
 * Combat Level Calculation
 * Price Checking
-* Basic Merchenting Abilities using [OSRS Price Guide](http://forums.zybez.net/pages/2007-price-guide)
+* Basic Merchenting Abilities using Zybez's [OSRS Price Guide](http://forums.zybez.net/pages/2007-price-guide)
+* Built in commands for leaving feedback
 * and more
 
 Bot Commands
@@ -23,7 +26,10 @@ Here is a list of commands the bot currently knows:
     !level <level> - Calculates how much xp is needed for a certain level
     !map - Returns a link to an interactive RuneScape map
     !qotd <message> - Sets the bot QOTD that is displayed to everyone who joins
+    !botstats - Displays irc bot statistics
     !toggle <service name> - Used to toggle services (greeting, qotd) on or off
+    !feedback <message> - Used to send comments/suggestions to the developer.
+    !broadcast <message> - Broadcasts the message to every channel the bot is in. Requires the broadcast_tag to be in the message.
     !compare <player1> <player2> <skillname> - Compare's a skill between two players.
     !rsn <name> - Assigns a RSN to your irc nickname. Allows you to use 'me' as a substitute for your RSN in commands that require a RSN.
     !price <item name> - Retrieves the current market value of an item
@@ -36,7 +42,8 @@ Calling a command using ! or . as a prefix will cause the bot to reply only to y
 
 Get the bot to join your channel
 --------------------------------
-If you want the bot to join your channel on irc.swiftirc.net but don't want to host it yourself you can try inviting it by typing `/invite Skill-Bot #some_channel`. However this will only work if I have my bot running which isn't necessarily 24/7 and it is prone to restarting on occasion while I develop it.
+In order to invite Skill-Bot to your channel on irc.swiftirc.net, run the command  `/invite SKill-Bot #your_channel`.
+Keep in mind that this is alpha software and will behave as such. This means there could be random disconnects, incorrect results, or any other strange behavior. If you notice anything out of the ordinary, please use the `!feedback` command to let me know what happened. Also feel free to use `!feedback` to leave comments or suggestions.
 
 
 Hosting Yourself
@@ -66,27 +73,31 @@ Create a settings.json file then run the jar.
 Settings File:
 
     {
-      "name": "Skill-Bot",
+      "name": "My Custom Skill-Bot",
       "server": "irc.swiftirc.net",
       "port": 6667,
-      "debug": false,
+      "debug": true,
+      "message_count": 0,
+      "command_count": 0,
+      "broadcast_tag": "{this has to be in the broadcast message or else it won't be sent}",
       "channels": [
         {
           "name": "#testbot",
           "greeting": true,
           "qotd": {
-            "message": "The qotd has not been set. Use !qotd to set it or !toggle qotd to turn it off.",
+            "message": "Sample qotd",
             "display": "true"
           }
         }
       ],
       "users": [
         {
-          "name": "KingKarthas",
-          "rsn": "King_Karthas"
+          "name": "PZezima",
+          "rsn": "zezima"
         }
       ]
     }
+
 
 Settings Description:
 
@@ -96,6 +107,9 @@ Settings Description:
 |server | the server to connect to|
 |port | the port to connect to the server on|
 |debug | whether or not to print debug info|
+|message_count | keeps track of the number of messages received|
+|command_count | keeps track of the number of messages that were commands|
+|broadcast_tag | a special string that is required to be in the broadcast message|
 |channels | an array of channels to connect to and their individual settings|
 |channel.name | the name of the channel to join|
 |channel.greeting | whether or not to display the help greeting when people join the channel|

@@ -4,6 +4,7 @@ Change Log <a id="Change_Log"></a>
     * Reformatted WTS/WTB command output to be more compact.
     * New !botstats (!bs) command to show misc. bot statistics
     * New !feedback command to leave comments/suggestions for the developer.
+    * Added !broadcast command to allow the bot hoster to send system messages.
 *  Version 1.1.3a
     * Added !alch command for finding out the high alch value of items using their RS2007 item names
     * Improved Hiscore parsing reliability

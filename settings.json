@@ -5,6 +5,7 @@
   "debug": true,
   "message_count": 0,
   "command_count": 0,
+  "broadcast_tag": "{this has to be in the broadcast message or else it won't be sent}",
   "channels": [
     {
       "name": "#testbot",

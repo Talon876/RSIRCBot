@@ -96,6 +96,10 @@ public class Settings {
         return settings.isDebug();
     }
 
+    public String getBroadcastTag() {
+        return settings.getBroadcastTag();
+    }
+
     public void addChannel(Channel c) {
         settings.addChannel(c);
         save();

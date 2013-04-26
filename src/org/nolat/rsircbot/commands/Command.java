@@ -16,6 +16,7 @@ public abstract class Command {
         new BotStatsCommand();
         new ToggleCommand();
         new FeedbackCommand();
+        new BroadcastCommand();
         new CompareCommand();
         new RSNCommand();
         new PriceCommand();
