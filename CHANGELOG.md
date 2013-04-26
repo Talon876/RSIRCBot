@@ -1,5 +1,8 @@
 Change Log <a id="Change_Log"></a>
 ----------
+*  Version 1.2a
+    * Reformatted WTS/WTB command output to be more compact.
+    * Added live bot statistic output
 *  Version 1.1.3a
     * Added !alch command for finding out the high alch value of items using their RS2007 item names
     * Improved Hiscore parsing reliability
