@@ -42,7 +42,7 @@ Calling a command using ! or . as a prefix will cause the bot to reply only to y
 
 Get the bot to join your channel
 --------------------------------
-In order to invite Skill-Bot to your channel on irc.swiftirc.net, run the command  `/invite SKill-Bot #your_channel`.
+In order to invite Skill-Bot to your channel on irc.swiftirc.net, run the command  `/invite Skill-Bot #your_channel`.
 Keep in mind that this is alpha software and will behave as such. This means there could be random disconnects, incorrect results, or any other strange behavior. If you notice anything out of the ordinary, please use the `!feedback` command to let me know what happened. Also feel free to use `!feedback` to leave comments or suggestions.
 
 
