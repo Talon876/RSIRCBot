@@ -30,6 +30,7 @@ Here is a list of commands the bot currently knows:
     !wts <item name> - Returns a list of people buying the specified item
     !wtb <item name> - Returns a list of people selling the specified item
     !calc <expression> - Evaluates simple math expressions
+    !alch <item name> - Retrieves the high alch value of an item.
 
 Calling a command using ! or . as a prefix will cause the bot to reply only to you. To get the bot to reply to the whole channel, call a command with @ as the prefix.
 
