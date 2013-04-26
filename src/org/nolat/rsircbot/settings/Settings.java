@@ -130,4 +130,22 @@ public class Settings {
         getChannel(channel).toggleGreeting();
         save();
     }
+
+    public int getMessageCount() {
+        return settings.getMessageCount();
+    }
+
+    public int getCommandCount() {
+        return settings.getCommandCount();
+    }
+
+    public void increaseMessageCount() {
+        settings.increaseMessageCount();
+        save();
+    }
+
+    public void increaseCommandCount() {
+        settings.increaseCommandCount();
+        save();
+    }
 }

@@ -66,7 +66,7 @@ public class RSIRCBot extends PircBot {
         if (recipientNick.equalsIgnoreCase(getNick())) {
             //we were kicked so remove this channel from the settings
             getSettings().removeChannel(channel);
-            System.out.println("We got kicked.");
+            System.out.println("We got kicked from #" + channel + " by " + kickerNick + " because " + reason);
         }
     }
 
@@ -137,9 +137,11 @@ public class RSIRCBot extends PircBot {
 
     private void process(String target, String sender, String message) {
         Command command = Command.getCommand(message);
+        settings.increaseMessageCount();
         if (command != null) {
             CommandExecutor ce = new CommandExecutor(this, target, sender, message, command);
             new Thread(ce).start();
+            settings.increaseCommandCount();
         } else {
             System.out.println(message + " wasn't a command");
         }

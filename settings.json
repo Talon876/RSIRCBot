@@ -1,8 +1,10 @@
 {
-  "name": "Skill-Bot[Debug]",
+  "name": "My Custom Skill-Bot",
   "server": "irc.swiftirc.net",
   "port": 6667,
   "debug": true,
+  "message_count": 0,
+  "command_count": 0,
   "channels": [
     {
       "name": "#testbot",
@@ -15,8 +17,8 @@
   ],
   "users": [
     {
-      "name": "KingKarthas",
-      "rsn": "King_Karthas"
+      "name": "PZezima",
+      "rsn": "zezima"
     }
   ]
 }

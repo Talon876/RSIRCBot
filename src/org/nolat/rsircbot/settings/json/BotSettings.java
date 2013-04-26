@@ -7,8 +7,11 @@ public class BotSettings {
     private String server;
     private int port;
     private boolean debug;
+    private int message_count;
+    private int command_count;
     private List<Channel> channels;
     private List<User> users;
+    private List<String> feedback;
 
     public String getName() {
         return name;
@@ -71,5 +74,21 @@ public class BotSettings {
 
     public void removeChannel(String channel) {
         channels.remove(getChannel(channel));
+    }
+
+    public int getMessageCount() {
+        return message_count;
+    }
+
+    public int getCommandCount() {
+        return command_count;
+    }
+
+    public void increaseMessageCount() {
+        message_count++;
+    }
+
+    public void increaseCommandCount() {
+        command_count++;
     }
 }
