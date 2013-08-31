@@ -8,7 +8,7 @@ import org.nolat.rsircbot.tools.URLReader;
 import com.google.gson.Gson;
 
 public class ItemSearch {
-    private static final String baseUrl = "http://forums.zybez.net/pages/2007-price-guide-api?term=";
+    private static final String baseUrl = "http://forums.zybez.net/runescape-2007-prices/api/";
 
     private String item;
 

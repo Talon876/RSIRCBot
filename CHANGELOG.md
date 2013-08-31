@@ -1,5 +1,7 @@
 Change Log <a id="Change_Log"></a>
 ----------
+*  Version 1.2.1a
+    * Fixed price/alch/wts/wtb commands
 *  Version 1.2a
     * Reformatted WTS/WTB command output to be more compact.
     * New !botstats (!bs) command to show misc. bot statistics

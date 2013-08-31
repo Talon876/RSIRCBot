@@ -12,7 +12,7 @@ import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
-    public static final String VERSION = "1.2a";
+    public static final String VERSION = "1.2.1a";
 
     private Settings settings;
 
