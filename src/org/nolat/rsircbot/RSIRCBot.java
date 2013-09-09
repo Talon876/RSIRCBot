@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;
 import org.jibble.pircbot.PircBot;
+import org.jibble.pircbot.User;
 import org.nolat.rsircbot.commands.Command;
 import org.nolat.rsircbot.settings.Settings;
 import org.nolat.rsircbot.settings.json.Channel;
@@ -12,7 +13,7 @@ import org.nolat.rsircbot.tools.Greetings;
 
 public class RSIRCBot extends PircBot {
 
-    public static final String VERSION = "1.2.1a";
+    public static final String VERSION = "1.2.2a";
 
     private Settings settings;
 
@@ -36,6 +37,8 @@ public class RSIRCBot extends PircBot {
         } catch (IrcException e) {
             e.printStackTrace();
         }
+
+        //join all the channels available in settings
         for (Channel c : settings.getChannels()) {
             joinChannel(c.getName());
         }
@@ -48,7 +51,7 @@ public class RSIRCBot extends PircBot {
         int tries = 0;
         while (tries < 5) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
             }
             System.out.println("Attempting to reconnect... try " + (tries + 1));
@@ -147,7 +150,50 @@ public class RSIRCBot extends PircBot {
         }
     }
 
+    @Override
+    protected void onQuit(String sourceNick, String sourceLogin, String sourceHostname, String reason) {
+        super.onQuit(sourceNick, sourceLogin, sourceHostname, reason);
+        purgeEmptyChannels(); //someone quit, so check for empty channels
+    }
+
+    @Override
+    protected void onPart(String channel, String sender, String login, String hostname) {
+        super.onPart(channel, sender, login, hostname);
+        purgeEmptyChannels(); //someone left, so check for empty channels
+    }
+
     public Settings getSettings() {
         return settings;
+    }
+
+    /**
+     * Checks every channel the bot is in and leaves the channel if the only person in the channel is the bot.
+     */
+    public void purgeEmptyChannels() {
+        for (String channel : getChannels()) {
+            leaveIfEmpty(channel, getUsers(channel));
+        }
+    }
+
+    @Override
+    protected void onUserList(String channel, User[] users) {
+        super.onUserList(channel, users);
+        leaveIfEmpty(channel, users);
+    }
+
+    /**
+     * Checks if a channel only has 1 user (the bot) and if so, leaves it.
+     * 
+     * @param channel
+     *            the channel to check
+     * @param users
+     *            the users in the channel
+     */
+    private void leaveIfEmpty(String channel, User[] users) {
+        if (users.length == 1) {
+            System.out.println("We are the only user in " + channel + ", leaving.");
+            partChannel(channel, "This channel is empty");
+            getSettings().removeChannel(channel); //remove channel from stored settings so it doesn't rejoin it later
+        }
     }
 }

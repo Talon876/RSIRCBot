@@ -1,5 +1,7 @@
 Change Log <a id="Change_Log"></a>
 ----------
+*  Version 1.2.2a
+    * Made bot part itself from empty channels so it doesn't get banned
 *  Version 1.2.1a
     * Fixed price/alch/wts/wtb commands
 *  Version 1.2a
