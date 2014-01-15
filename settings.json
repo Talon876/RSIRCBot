@@ -3,9 +3,9 @@
   "server": "irc.swiftirc.net",
   "port": 6667,
   "debug": true,
+  "broadcast_tag": "{this has to be in the broadcast message or else it won\u0027t be sent}",
   "message_count": 0,
   "command_count": 0,
-  "broadcast_tag": "{this has to be in the broadcast message or else it won't be sent}",
   "channels": [
     {
       "name": "#testbot",

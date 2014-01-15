@@ -4,6 +4,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.nolat.rsircbot.RSIRCBot;
+import org.nolat.rsircbot.tools.Calculate;
 
 public class CalcCommand extends Command {
 
@@ -15,6 +16,7 @@ public class CalcCommand extends Command {
         setHelpMessage("Evaluates simple math expressions");
         ScriptEngineManager mgr = new ScriptEngineManager();
         engine = mgr.getEngineByName("JavaScript");
+        engine.put("calc", new Calculate());
     }
 
     @Override
@@ -24,7 +26,6 @@ public class CalcCommand extends Command {
         try {
             answer = engine.eval(expression).toString();
         } catch (Exception ex) {
-
         }
         if (!answer.isEmpty()) {
             bot.sendMessage(channel, executor, "Result: " + answer, this);
