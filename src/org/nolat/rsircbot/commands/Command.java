@@ -24,6 +24,7 @@ public abstract class Command {
         new WTBCommand();
         new CalcCommand();
         new AlchCommand();
+        new BitcoinCommand();
     }
 
     private boolean privateReply = true;
