@@ -1,6 +1,6 @@
 Change Log <a id="Change_Log"></a>
 ----------
-*  Version 1.3.2a
+*  Version 1.3a
     * New !bitcoin (!btc) command to look up bitcoin prices on MtGox.
 *  Version 1.2.2a
     * Made bot part itself from empty channels so it doesn't get banned
