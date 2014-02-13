@@ -1,5 +1,7 @@
 Change Log <a id="Change_Log"></a>
 ----------
+*  Version 1.3.1a
+    * Changed combat command to display fractional combat levels.
 *  Version 1.3a
     * New !bitcoin (!btc) command to look up bitcoin prices on MtGox.
 *  Version 1.2.2a

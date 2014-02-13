@@ -26,7 +26,7 @@ public class CombatCommand extends Command {
             try {
                 HiscoreData hiscores = new HiscoreData(username);
                 bot.sendMessage(channel, executor, String.format(
-                        "%s is combat level %d (Atk: %d; Str: %d; Def: %d; HP: %d; Prayer: %d; Ranged: %d; Magic: %d)",
+                        "%s is combat level %.3f (Atk: %d; Str: %d; Def: %d; HP: %d; Prayer: %d; Ranged: %d; Magic: %d)",
                         username, hiscores.getCombatLevel(), hiscores.getAttack().getLevel(), hiscores.getStrength()
                         .getLevel(), hiscores.getDefence().getLevel(), hiscores.getHitpoints().getLevel(),
                         hiscores.getPrayer().getLevel(), hiscores.getRanged().getLevel(), hiscores.getMagic()

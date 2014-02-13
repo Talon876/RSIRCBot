@@ -26,7 +26,12 @@ public class Calculate {
         return xpForNextLevel - xp;
     }
 
-    public static int combatLevel(int atk, int str, int def, int prayer, int range, int magic, int hp) {
+    public static int combatLevelRounded(int atk, int str, int def, int prayer, int range, int magic, int hp) {
+
+        return (int) combatLevel(atk, str, def, prayer, range, magic, hp);
+    }
+
+    public static double combatLevel(int atk, int str, int def, int prayer, int range, int magic, int hp) {
 
         double baseLvl = (def + hp + Math.floor(prayer / 2)) * 0.25;
 
@@ -36,6 +41,6 @@ public class Calculate {
 
         baseLvl = baseLvl + Math.max(meleeLvl, (Math.max(rangerLvl, mageLvl)));
 
-        return (int) baseLvl;
+        return baseLvl;
     }
 }

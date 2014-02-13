@@ -11,13 +11,13 @@ import org.nolat.rsircbot.tools.Calculate;
 
 public class HiscoreData {
     private static final String baseUrl = "http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=";
-    private String username;
-    private String[] skillNames = { "overall", "attack", "defence", "strength", "hitpoints",
+    private final String username;
+    private final String[] skillNames = { "overall", "attack", "defence", "strength", "hitpoints",
             "ranged", "prayer", "magic", "cooking", "woodcutting", "fletching",
             "fishing", "firemaking", "crafting", "smithing", "mining", "herblore",
             "agility", "thieving", "slayer", "farming", "runecraft", "hunter", "construction" };
 
-    private HashMap<String, RankLevelXp> hiscores = new HashMap<String, RankLevelXp>();
+    private final HashMap<String, RankLevelXp> hiscores = new HashMap<String, RankLevelXp>();
 
     public HiscoreData(String username) throws IOException {
         this.username = username;
@@ -54,7 +54,7 @@ public class HiscoreData {
         return hiscores.get(skill.toLowerCase());
     }
 
-    public int getCombatLevel() {
+    public double getCombatLevel() {
         int atk = hiscores.get("attack").getLevel();
         int str = hiscores.get("strength").getLevel();
         int def = hiscores.get("defence").getLevel();
