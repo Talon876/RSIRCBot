@@ -28,6 +28,7 @@ public class RSIRCBot extends PircBot {
 
     private void setup() {
         try {
+            System.out.println("Connecting to " + settings.getServer() + ":" + settings.getPort());
             connect(settings.getServer(), settings.getPort());
         } catch (NickAlreadyInUseException e) {
             System.out.println("Nick was in use.");

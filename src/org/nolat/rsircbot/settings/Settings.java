@@ -100,6 +100,10 @@ public class Settings {
         return settings.getBroadcastTag();
     }
 
+    public String getWitToken() {
+        return settings.getWitToken();
+    }
+
     public void addChannel(Channel c) {
         settings.addChannel(c);
         save();

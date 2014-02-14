@@ -9,6 +9,7 @@ public class BotSettings {
     private int port;
     private boolean debug;
     private String broadcast_tag;
+    private String wit_token;
     private int message_count;
     private int command_count;
     private List<Channel> channels;
@@ -33,6 +34,10 @@ public class BotSettings {
 
     public String getBroadcastTag() {
         return broadcast_tag;
+    }
+
+    public String getWitToken() {
+        return wit_token;
     }
 
     public List<Channel> getChannels() {
