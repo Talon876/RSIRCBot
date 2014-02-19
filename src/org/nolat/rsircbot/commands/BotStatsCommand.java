@@ -1,6 +1,7 @@
 package org.nolat.rsircbot.commands;
 
 import org.nolat.rsircbot.RSIRCBot;
+import org.pircbotx.Channel;
 
 public class BotStatsCommand extends Command {
 
@@ -15,16 +16,16 @@ public class BotStatsCommand extends Command {
 
         String formattedMessage = "";
         int numUsers = 0;
-        for (String chan : bot.getChannels()) {
-            numUsers += bot.getUsers(chan).length - 1; //subtract 1 so it doesn't count itself
+        for (Channel chan : bot.getBot().getUserChannelDao().getAllChannels()) {
+            numUsers += chan.getUsers().size() - 1; //subtract 1 so it doesn't count itself
         }
         formattedMessage += "I am operating in "
-                + bot.getChannels().length
+                + bot.getBot().getUserChannelDao().getAllChannels().size()
                 +
                 " channels which contain a total of "
                 + numUsers
                 + " users (~"
-                + (numUsers / bot.getChannels().length)
+                + (numUsers / bot.getBot().getUserChannelDao().getAllChannels().size())
                 + " users/channel). I have seen "
                 + bot.getSettings().getMessageCount()
                 + " messages, "

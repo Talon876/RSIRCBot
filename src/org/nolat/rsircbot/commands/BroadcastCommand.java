@@ -1,6 +1,7 @@
 package org.nolat.rsircbot.commands;
 
 import org.nolat.rsircbot.RSIRCBot;
+import org.pircbotx.Channel;
 
 public class BroadcastCommand extends Command {
 
@@ -15,8 +16,9 @@ public class BroadcastCommand extends Command {
         String broadcastMsg = message.substring("!broadcast".length());
         String broadcastTag = bot.getSettings().getBroadcastTag();
         if (broadcastMsg.contains(broadcastTag)) {
-            for (String chan : bot.getChannels()) {
-                bot.sendMessage(chan, "System Message: " + broadcastMsg.replace(broadcastTag, ""));
+            for (Channel chan : bot.getBot().getUserChannelDao().getAllChannels()) {
+                bot.sendMessage(chan.getName(),
+                        executor, "System Message: " + broadcastMsg.replace(broadcastTag, ""), this);
             }
         } else {
             bot.sendMessage(channel, executor, "Unable to broadcast message not containing the broadcast tag.", this);

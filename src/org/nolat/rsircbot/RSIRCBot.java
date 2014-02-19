@@ -1,17 +1,21 @@
 package org.nolat.rsircbot;
 
-import java.io.IOException;
-
-import org.jibble.pircbot.IrcException;
-import org.jibble.pircbot.NickAlreadyInUseException;
-import org.jibble.pircbot.PircBot;
-import org.jibble.pircbot.User;
 import org.nolat.rsircbot.commands.Command;
 import org.nolat.rsircbot.settings.Settings;
 import org.nolat.rsircbot.settings.json.Channel;
 import org.nolat.rsircbot.tools.Greetings;
+import org.pircbotx.Configuration;
+import org.pircbotx.PircBotX;
+import org.pircbotx.User;
+import org.pircbotx.exception.IrcException;
+import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.*;
 
-public class RSIRCBot extends PircBot {
+import java.io.IOException;
+
+public class RSIRCBot extends ListenerAdapter<PircBotX> {
+
+    private PircBotX bot;
 
     public static final String VERSION = "1.3.1a";
 
@@ -19,123 +23,105 @@ public class RSIRCBot extends PircBot {
 
     public RSIRCBot(Settings settings) {
         this.settings = settings;
-        setName(settings.getName());
-        setAutoNickChange(true);
-        setMessageDelay(50);
-
-        setup();
-    }
-
-    private void setup() {
+        Configuration configuration = new Configuration.Builder()
+                .setName(settings.getName())
+                .setAutoNickChange(true)
+                .setMessageDelay(50)
+                .setServer(settings.getServer(), settings.getPort())
+                .setAutoReconnect(true)
+                .addListener(this)
+                .buildConfiguration();
+        bot = new PircBotX(configuration);
         try {
-            System.out.println("Connecting to " + settings.getServer() + ":" + settings.getPort());
-            connect(settings.getServer(), settings.getPort());
-        } catch (NickAlreadyInUseException e) {
-            System.out.println("Nick was in use.");
-            e.printStackTrace();
+            bot.startBot();
         } catch (IOException e) {
+            System.out.println("Couldn't start bot: " + e.getMessage());
             e.printStackTrace();
         } catch (IrcException e) {
+            System.out.println("Couldn't start bot: " +e.getMessage());
             e.printStackTrace();
         }
-
-        //join all the channels available in settings
         for (Channel c : settings.getChannels()) {
-            joinChannel(c.getName());
+            bot.sendIRC().joinChannel(c.getName());
         }
     }
 
+
     @Override
-    protected void onDisconnect() {
-        super.onDisconnect();
+    public void onDisconnect(DisconnectEvent<PircBotX> event) throws Exception {
         System.out.println("Why did this happen?");
-        int tries = 0;
-        while (tries < 5) {
-            try {
-                Thread.sleep(15000);
-            } catch (InterruptedException e) {
-            }
-            System.out.println("Attempting to reconnect... try " + (tries + 1));
-            setup();
-            tries++;
-            if (isConnected()) {
-                tries = 5;
-            }
-        }
+
     }
 
     @Override
-    protected void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname,
-            String recipientNick, String reason) {
-        if (recipientNick.equalsIgnoreCase(getNick())) {
+    public void onKick(KickEvent<PircBotX> event) throws Exception {
+        if (event.getRecipient().getNick().equalsIgnoreCase(bot.getNick())) {
             //we were kicked so remove this channel from the settings
-            getSettings().removeChannel(channel);
-            System.out.println("We got kicked from #" + channel + " by " + kickerNick + " because " + reason);
+            getSettings().removeChannel(event.getChannel().getName());
+            System.out.println("We got kicked from #" + event.getChannel().getName() + " by " +
+                    event.getUser().getNick() + " because " + event.getReason());
         }
     }
 
     @Override
-    protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname,
-            String channel) {
-        Channel c = new Channel(channel, true, true, "Use !qotd to set the qotd or !toggle qotd to turn it off.");
+    public void onInvite(InviteEvent<PircBotX> event) throws Exception {
+        Channel c = new Channel(event.getChannel(), true, true, "Use !qotd to set the qotd or !toggle qotd to turn it off.");
         settings.addChannel(c);
-        this.joinChannel(channel); //join channel we were invited to
+        bot.sendIRC().joinChannel(event.getChannel());
     }
 
     @Override
-    protected void onJoin(String channel, String sender, String login, String hostname) {
-        super.onJoin(channel, sender, login, hostname);
-        if (!sender.equalsIgnoreCase(getNick())) {
-            onUserJoin(channel, sender);
+    public void onJoin(JoinEvent<PircBotX> event) throws Exception {
+        if(!event.getUser().getNick().equalsIgnoreCase(bot.getNick())) {
+            onUserJoin(event.getChannel().getName(), event.getUser().getNick());
         } else {
-            onBotJoin(channel);
+            onBotJoin(event.getChannel().getName());
         }
     }
 
     private void onUserJoin(String channel, String user) {
         Channel c = settings.getChannel(channel);
         if (c.shouldDisplayGreeting()) {
-            sendMessage(channel, Greetings.getRandomGreeting() + " " + user
+            bot.sendIRC().message(channel, Greetings.getRandomGreeting() + " " + user
                     + ", type !help to view help for this bot. Send commands directly to the bot with /msg "
-                    + getNick() + " !help");
+                    + bot.getNick() + " !help");
         }
 
         if (c.shouldDisplayQotd()) {
-            sendMessage(channel, "QOTD: " + c.getQotdMessage());
+            bot.sendIRC().message(channel, "QOTD: " + c.getQotdMessage());
+//            sendMessage(channel, "QOTD: " + c.getQotdMessage());
         }
     }
 
     private void onBotJoin(String channel) {
         Channel c = settings.getChannel(channel);
-        sendMessage(
+        bot.sendIRC().message(
                 channel,
                 Greetings.getRandomGreeting()
-                + " everybody! (Version: "
-                + VERSION
-                + "; Patch Notes: https://github.com/Talon876/RSIRCBot/blob/master/CHANGELOG.md ) Keep in mind this bot is alpha software so there may be sporadic behavior and odd bugs.");
+                        + " everybody! (Version: "
+                        + VERSION
+                        + "; Patch Notes: https://github.com/Talon876/RSIRCBot/blob/master/CHANGELOG.md ) Keep in mind this bot is alpha software so there may be sporadic behavior and odd bugs.");
 
         if (c.shouldDisplayQotd()) {
-            sendMessage(channel, "QOTD: " + c.getQotdMessage());
+            bot.sendIRC().message(channel, "QOTD: " + c.getQotdMessage());
         }
     }
 
     @Override
-    protected void onMessage(String channel, String sender, String login, String hostname, String message) {
-        super.onMessage(channel, sender, login, hostname, message);
-        process(channel, sender, message);
+    public void onMessage(MessageEvent<PircBotX> event) throws Exception {
+        process(event.getChannel().getName(), event.getUser().getNick(), event.getMessage());
     }
 
     @Override
-    protected void onPrivateMessage(String sender, String login, String hostname, String message) {
-        super.onPrivateMessage(sender, login, hostname, message);
-        process(sender, sender, message);
+    public void onPrivateMessage(PrivateMessageEvent<PircBotX> event) throws Exception {
+        process(event.getUser().getNick(), event.getUser().getNick(), event.getMessage());
     }
 
     public void sendMessage(String channel, String executor, String message, Command command) {
         if (command.isPrivateReply()) {
-            sendNotice(executor, message);
+            bot.sendIRC().notice(executor, message);
         } else {
-            sendMessage(channel, message);
+            bot.sendIRC().message(channel, message);
         }
     }
 
@@ -152,14 +138,12 @@ public class RSIRCBot extends PircBot {
     }
 
     @Override
-    protected void onQuit(String sourceNick, String sourceLogin, String sourceHostname, String reason) {
-        super.onQuit(sourceNick, sourceLogin, sourceHostname, reason);
+    public void onQuit(QuitEvent<PircBotX> event) throws Exception {
         purgeEmptyChannels(); //someone quit, so check for empty channels
     }
 
     @Override
-    protected void onPart(String channel, String sender, String login, String hostname) {
-        super.onPart(channel, sender, login, hostname);
+    public void onPart(PartEvent<PircBotX> event) throws Exception {
         purgeEmptyChannels(); //someone left, so check for empty channels
     }
 
@@ -171,30 +155,32 @@ public class RSIRCBot extends PircBot {
      * Checks every channel the bot is in and leaves the channel if the only person in the channel is the bot.
      */
     public void purgeEmptyChannels() {
-        for (String channel : getChannels()) {
-            leaveIfEmpty(channel, getUsers(channel));
+
+        for (org.pircbotx.Channel channel : bot.getUserChannelDao().getAllChannels()) {
+            leaveIfEmpty(channel.getName(), channel.getUsers().size());
         }
     }
 
     @Override
-    protected void onUserList(String channel, User[] users) {
-        super.onUserList(channel, users);
-        leaveIfEmpty(channel, users);
+    public void onUserList(UserListEvent<PircBotX> event) throws Exception {
+        leaveIfEmpty(event.getChannel().getName(), event.getUsers().size());
     }
 
     /**
      * Checks if a channel only has 1 user (the bot) and if so, leaves it.
-     * 
-     * @param channel
-     *            the channel to check
-     * @param users
-     *            the users in the channel
+     *
+     * @param channel the channel to check
+     * @param userAmt   the amount of users in the channel
      */
-    private void leaveIfEmpty(String channel, User[] users) {
-        if (users.length == 1) {
+    private void leaveIfEmpty(String channel, int userAmt) {
+        if (userAmt == 1) {
             System.out.println("We are the only user in " + channel + ", leaving.");
-            partChannel(channel, "This channel is empty");
+            bot.getUserChannelDao().getChannel(channel).send().part("This channel is empty");
             getSettings().removeChannel(channel); //remove channel from stored settings so it doesn't rejoin it later
         }
+    }
+
+    public PircBotX getBot() {
+        return bot;
     }
 }

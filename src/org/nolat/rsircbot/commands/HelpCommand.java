@@ -11,7 +11,7 @@ public class HelpCommand extends Command {
 
     @Override
     public void executeCommand(RSIRCBot bot, String channel, String executor, String message) {
-        bot.sendMessage(channel, "-----Available Commands-----");
+        bot.sendMessage(channel, executor, "-----Available Commands-----", this);
         for (Command c : Command.commands) {
             if (c.getArgString().equals("")) {
                 bot.sendMessage(channel, executor,
