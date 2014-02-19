@@ -22,3 +22,5 @@ build
 src/org/nolat/rsircbot/TestCode.java
 
 settings-debug.json
+
+docs/update_items.py
