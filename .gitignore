@@ -15,6 +15,7 @@ dist
 bin
 target
 build
+out
 .classpath
 .project
 .settings
@@ -27,3 +28,6 @@ settings-debug.json
 docs/update_items.py
 
 .gradle
+*.iws
+*.ipr
+*.iml
