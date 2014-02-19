@@ -6,7 +6,6 @@ import org.nolat.rsircbot.settings.json.Channel;
 import org.nolat.rsircbot.tools.Greetings;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
-import org.pircbotx.User;
 import org.pircbotx.exception.IrcException;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.*;
@@ -23,27 +22,29 @@ public class RSIRCBot extends ListenerAdapter<PircBotX> {
 
     public RSIRCBot(Settings settings) {
         this.settings = settings;
-        Configuration configuration = new Configuration.Builder()
-                .setName(settings.getName())
-                .setAutoNickChange(true)
-                .setMessageDelay(50)
-                .setServer(settings.getServer(), settings.getPort())
-                .setAutoReconnect(true)
-                .addListener(this)
-                .buildConfiguration();
-        bot = new PircBotX(configuration);
+        Configuration.Builder<PircBotX> builder = new Configuration.Builder<>().
+                setName(settings.getName()).
+                setAutoNickChange(true).
+                setMessageDelay(50).
+                setServer(settings.getServer(), settings.getPort()).
+                setAutoReconnect(true).
+                addListener(this);
+        for (Channel c : settings.getChannels()) {
+            builder.addAutoJoinChannel(c.getName());
+        }
+        bot = new PircBotX(builder.buildConfiguration());
         try {
+            System.out.println("Attempting to connect to " + settings.getServer() + ":" + settings.getPort());
+            settings.save();
             bot.startBot();
         } catch (IOException e) {
             System.out.println("Couldn't start bot: " + e.getMessage());
             e.printStackTrace();
         } catch (IrcException e) {
-            System.out.println("Couldn't start bot: " +e.getMessage());
+            System.out.println("Couldn't start bot: " + e.getMessage());
             e.printStackTrace();
         }
-        for (Channel c : settings.getChannels()) {
-            bot.sendIRC().joinChannel(c.getName());
-        }
+
     }
 
 
@@ -72,7 +73,7 @@ public class RSIRCBot extends ListenerAdapter<PircBotX> {
 
     @Override
     public void onJoin(JoinEvent<PircBotX> event) throws Exception {
-        if(!event.getUser().getNick().equalsIgnoreCase(bot.getNick())) {
+        if (!event.getUser().getNick().equalsIgnoreCase(bot.getNick())) {
             onUserJoin(event.getChannel().getName(), event.getUser().getNick());
         } else {
             onBotJoin(event.getChannel().getName());
@@ -170,7 +171,7 @@ public class RSIRCBot extends ListenerAdapter<PircBotX> {
      * Checks if a channel only has 1 user (the bot) and if so, leaves it.
      *
      * @param channel the channel to check
-     * @param userAmt   the amount of users in the channel
+     * @param userAmt the amount of users in the channel
      */
     private void leaveIfEmpty(String channel, int userAmt) {
         if (userAmt == 1) {

@@ -39,7 +39,6 @@ public class Main {
                     String filePath = config.getString("file");
                     Settings settings = new Settings(filePath);
                     RSIRCBot bot = new RSIRCBot(settings);
-                    settings.save();
                 }
             } else {
                 help(jsap);
