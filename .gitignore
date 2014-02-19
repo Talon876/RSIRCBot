@@ -21,6 +21,9 @@ build
 .cache
 src/org/nolat/rsircbot/TestCode.java
 
+#ignore logging/settings file used for debugging
+log4j-custom.properties
 settings-debug.json
-
 docs/update_items.py
+
+.gradle
