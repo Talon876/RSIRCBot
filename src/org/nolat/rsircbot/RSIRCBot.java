@@ -126,16 +126,20 @@ public class RSIRCBot extends ListenerAdapter<PircBotX> {
         }
     }
 
-    private void process(String target, String sender, String message) {
+    public void process(String target, String sender, String message) {
         Command command = Command.getCommand(message);
         settings.increaseMessageCount();
         if (command != null) {
-            CommandExecutor ce = new CommandExecutor(this, target, sender, message, command);
-            new Thread(ce).start();
-            settings.increaseCommandCount();
+            applyCommand(target, sender, message, command);
         } else {
             System.out.println(message + " wasn't a command");
         }
+    }
+
+    public void applyCommand(String target, String sender, String message, Command command) {
+        CommandExecutor ce = new CommandExecutor(this, target, sender, message, command);
+        new Thread(ce).start();
+        settings.increaseCommandCount();
     }
 
     @Override

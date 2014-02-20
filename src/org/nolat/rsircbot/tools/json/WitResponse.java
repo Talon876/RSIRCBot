@@ -1,90 +1,137 @@
 package org.nolat.rsircbot.tools.json;
 
-import java.util.List;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Map;
 
 public class WitResponse {
 
-    public String msg_id;
-    public String msg_body;
-    public Outcome outcome;
+    @SerializedName("msg_id")
+    private String msgId;
 
-    public class Outcome {
-        public String intent;
-        public double confidence;
-        public Map<String, Entity> entities;
+    @SerializedName("msg_body")
+    private String msgBody;
+
+    @SerializedName("outcome")
+    private WitOutcome outcome;
+
+    public class WitOutcome {
+
+        @SerializedName("intent")
+        private String intent;
+
+        @SerializedName("confidence")
+        private double confidence;
+
+        @SerializedName("entities")
+        private Map<String, JsonObject> entities;
 
         public String getIntent() {
+
             return intent;
         }
-
         public double getConfidence() {
             return confidence;
         }
 
-        public Map<String, Entity> getEntities() {
+        public Map<String, JsonObject> getEntities() {
             return entities;
         }
 
-        public List<String> getEntityNames() {
-            List<String> entityNames = null;
-            for (Map.Entry<String, Entity> entity : entities.entrySet()) {
-                entityNames.add(entity.getKey());
-            }
-            return entityNames;
+        public JsonObject getEntity(String entity) {
+            return entities.get(entity);
         }
 
-        public List<Entity> getEntitiesList() {
-            List<Entity> entityList = null;
-            for (Map.Entry<String, Entity> entity : entities.entrySet()) {
-                entityList.add(entity.getValue());
+        public String getFirstEntityValueOr(String entity, String defaultValue) {
+
+            JsonObject ent = entities.get(entity);
+            if(ent == null) {
+                return defaultValue;
             }
-            return entityList;
+
+            if(ent.getAsJsonObject() == null) {
+                System.out.println("json entity object was null");
+            }
+            if(ent.getAsJsonArray() == null) {
+                System.out.println("json entity array was null");
+            }
+
+            return ent.get("value").getAsString();
         }
 
         @Override
         public String toString() {
-            return "Intent: [" + intent + "]";
+            return "Intent: [" + getIntent() + "]";
         }
+
+
+//        /**
+//         * Get the value of an entity or return a default value
+//         * @param entity the key to check the entities for
+//         * @param otherwise if the key doesn't have a value, use this as the default
+//         * @return entities[entity] or otherwise if null
+//         */
+//        public String getEntityValueOr(int idx, String entity, String otherwise) {
+//            Entity ent = getEntity(entity).get(idx);
+//            if(ent == null) {
+//                return otherwise;
+//            } else {
+//                return ent.getValue();
+//            }
+//        }
+//
+//        public String getFirstEntityValueOr(String entity, String otherwise) {
+//            return getEntityValueOr(0, entity, otherwise);
+//        }
+//
+//        public List<Entity> getEntity(String entity) {
+//            return entities.get(entity);
+//        }
+//
+//        public Entity getFirstEntity(String entity) {
+//            return entities.get(entity).get(0);
+//        }
+
     }
 
-    public class Entity {
-        public int end;
-        public int start;
-        public String value;
-        public String body;
+//    public class Entity {
+//        public int end;
+//        public int start;
+//        public String value;
+//        public String body;
+//
+//        public int getEnd() {
+//            return end;
+//        }
+//
+//        public int getStart() {
+//            return start;
+//        }
+//
+//        public String getValue() {
+//            return value;
+//        }
+//
+//        public String getBody() {
+//            return body;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return "{" + body + " as " + value + "}";
+//        }
+//    }
 
-        public int getEnd() {
-            return end;
-        }
-
-        public int getStart() {
-            return start;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public String getBody() {
-            return body;
-        }
-
-        @Override
-        public String toString() {
-            return "{" + body + " as " + value + "}";
-        }
+    public String getMsgId() {
+        return msgId;
     }
 
-    public String getMsg_id() {
-        return msg_id;
+    public String getMsgBody() {
+        return msgBody;
     }
 
-    public String getMsg_body() {
-        return msg_body;
-    }
-
-    public Outcome getOutcome() {
+    public WitOutcome getOutcome() {
         return outcome;
     }
 

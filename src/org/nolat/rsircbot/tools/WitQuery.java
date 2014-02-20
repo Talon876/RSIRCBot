@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.nolat.rsircbot.tools.json.WitResponse;
-import org.nolat.rsircbot.tools.json.WitResponse.Entity;
 
 import com.google.gson.Gson;
 
@@ -54,21 +53,26 @@ public class WitQuery {
         } catch (Exception e) {
             System.err.println("An error occurred during the request: " + e.getMessage());
         }
+        System.out.println("Answer: " + response);
         return response;
     }
 
-    public String getRawOutput() {
+    public String getRawAnswer() {
         return rawOutput;
     }
 
-    public String getAnswer() {
+    public String getShortAnswer() {
         String answer = "";
 
-        answer += "Intent: " + witResponse.getOutcome().getIntent();
-        for (Map.Entry<String, Entity> entity : witResponse.getOutcome().getEntities().entrySet()) {
-            answer += "; " + entity.getKey() + ":" + entity.getValue();
-        }
-        answer += " (Conf: " + witResponse.getOutcome().getConfidence() + ")";
+        answer += "Intent: " + getWitResponse().getOutcome().getIntent();
+//        for (Map.Entry<String, Entity> entity : getWitResponse().getOutcome().getEntities().entrySet()) {
+//            answer += "; " + entity.getKey() + ":" + entity.getValue();
+//        }
+        answer += " (Conf: " + getWitResponse().getOutcome().getConfidence() + ")";
         return answer;
+    }
+
+    public WitResponse getWitResponse() {
+        return witResponse;
     }
 }
