@@ -61,9 +61,13 @@ How To Compile
 
 Obtain the code with `git clone git@github.com:Talon876/RSIRCBot.git` or download [the zip file](https://github.com/Talon876/RSIRCBot/archive/master.zip).
 
-CD in to the directory with build.xml
+CD in to the directory with build.gradle
 
-Run `ant jar` to build the executable jar.
+If you are on windows run `gradlew jar` which will run the gradle jar task. If you don't have gradle installed, this command will install a local copy for you.
+
+Note: If you are on Linux/Mac you may have to run `chmod +x ./gradlew` before running `./gradlew jar`.
+
+After the gradle build finishes, the jar will be placed in `libs/`
 
 
 How To Run
@@ -130,6 +134,9 @@ Running the jar:
 
       [(-f|--file) <file>]
             The path to the file to load settings from (default: settings.json)
+
+
+    Note that you will have to use nohup or run the command in a screen/tmux session in order for it to persist on disconnect.
 
 
 Known Problems
