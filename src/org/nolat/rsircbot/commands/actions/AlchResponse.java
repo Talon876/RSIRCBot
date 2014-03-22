@@ -1,6 +1,6 @@
 package org.nolat.rsircbot.commands.actions;
 
-public class AlchResponse extends ActionResponse{
+public class AlchResponse extends ActionResponse {
  
         public final String itemName;
         public final int natPrice;
