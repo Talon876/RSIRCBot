@@ -69,6 +69,14 @@ Note: If you are on Linux/Mac you may have to run `chmod +x ./gradlew` before ru
 
 After the gradle build finishes, the jar will be placed in `libs/`
 
+You can also use gradle to generate eclipse or IntelliJ project files for easier importing.
+
+For eclipse, run `gradlew eclipse`
+
+For IntelliJ, run `gradlew idea`
+
+If you add, change, or remove any of the dependencies in the `build.gradle` file, rerun the project generation commands and refresh the project in your IDE.
+
 
 How To Run
 ----------
