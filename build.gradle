@@ -24,6 +24,7 @@ sourceSets { //set location of project src and resources
 
 dependencies {
     compile 'log4j:log4j:1.2.17'
+    compile 'org.slf4j:slf4j-simple:1.7.5'
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.google.guava:guava:15.0'
@@ -34,6 +35,7 @@ dependencies {
     testCompile 'junit:junit:4.11'
 
     runtime 'log4j:log4j:1.2.17'
+    runtime 'org.slf4j:slf4j-simple:1.7.5'
 }
 
 jar {
